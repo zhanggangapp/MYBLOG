@@ -1,0 +1,42 @@
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>登陆</h2>
+<form role="form" action="~/Login/Index" method="post">
+    <div class="form-group">
+        <label for="exampleInputEmail1">邮箱</label>
+        <input type="text" name="Email" class="form-control" placeholder="邮箱">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">密码</label>
+        <input class="form-control" name="Password" placeholder="密码" />
+    </div>
+    <div class="form-group">
+        <label for="vcode">验证码</label>
+        <span style="display:flex;">
+            <input type="text" style="max-width:180px;" class="form-control" name="Vcode" placeholder="验证码" />
+            <img id="vcode_img" src="~/handlers/vcode.ashx" data-src="/handlers/vcode.ashx" width="100" height="32" alt="验证码" title="点击切换验证码" />
+        </span>
+    </div>
+    @if (ViewData["result"] != null && !string.IsNullOrEmpty(ViewData["result"].ToString()))
+    {
+        <div class="alert alert-dismissable alert-warning" style="max-width:280px;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <i class="glyphicon glyphicon-warning-sign"></i>@ViewData["result"].ToString()
+        </div>
+    }
+    <button type="submit" class="btn btn-default">提交</button>
+    <script>
+        //$('#vcode_img').on('click', function () {
+        //    console.log(11)
+        //    //$(this).attr('src', $(this).data('src') + '?' + Math.random());
+        //});
+        $('#vcode_img').click(function () {
+            $(this).attr('src', $(this).data('src') + '?' + Math.random());
+        });
+    </script>
+</form>
+
