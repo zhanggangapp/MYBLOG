@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "SearchList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Model;
+@using Common;
+<h2>搜索结果</h2>
+<div class="row">
+    @if (ViewData["searchlist"]!=null && ((List<BlogInfo>)ViewData["searchlist"]).Count>0)
+    {
+        foreach (BlogInfo blogInfo in (List<BlogInfo>)ViewData["searchlist"])
+        {
+            <div class="col-md-12">
+                <p><a href="/Blog/Index?blogId=@blogInfo.Id">@blogInfo.Title  </a>@blogInfo.CreatedTime.ToLongDateString()</p>
+            </div>
+        }
+        <div class="col-md-12">
+            <nav>
+                <ul class="pagination">
+                    @MvcHtmlString.Create(PageBar.GetPageBar((int)ViewData["pageIndex"], (int)ViewData["pageCount"]))
+                </ul>
+            </nav>
+        </div>
+    }
+    else
+    {
+        <div class="col-md-12">
+            没有数据
+        </div>
+    }
+    
+</div>

@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Model;
+@using Common;
+
+<h2>博客目录</h2>
+<div class="row">
+    @foreach (BlogInfo blogInfo in (List<BlogInfo>)ViewData["list"])
+    {
+        <div class="col-md-12">
+            <p><a href="/Blog/Index?blogId=@blogInfo.Id">@blogInfo.Title  </a>@blogInfo.CreatedTime.ToLongDateString()</p>
+        </div>
+    }
+    <div class="col-md-12">
+        <nav>
+            <ul class="pagination">
+                @MvcHtmlString.Create(PageBar.GetPageBar((int)ViewData["pageIndex"], (int)ViewData["pageCount"]))
+            </ul>
+        </nav>
+    </div>
+</div>
