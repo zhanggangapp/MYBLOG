@@ -22,12 +22,10 @@ namespace BLOG.Controllers
         }
         public ActionResult Rss()
         {
-            //修正,此处control应该从bll层获取数据。Index是修正的方案.
+            //修正,此处control应该从bll层获取数据。Index是修正的方案. 此处已不使用
             RSSEntity rss = ArticleModel.GetList().ToDefaultRss();
             RssResult result = new RssResult();
             result.Data = rss;
-
-
             return result;
 
         }
