@@ -13,7 +13,7 @@ namespace BLOG.Controllers
         // GET: RSS
         public ActionResult Index()
         {
-            DateTime beginTime = System.DateTime.Now.AddDays(-30);
+            DateTime beginTime = System.DateTime.Now.AddDays(-15);
             RSSEntity rss = articleService.GetArticleList(beginTime).ToDefaultRss();
             RssResult result = new RssResult();
             result.Data = rss;
