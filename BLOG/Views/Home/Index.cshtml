@@ -1,6 +1,6 @@
 
 @{
-    ViewBag.Title = "BLOG首页1";
+    ViewBag.Title = "BLOG";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using Model;
@@ -13,7 +13,7 @@
             <p>
                 @blogInfo.Content
             </p>
-            <p><a class="btn btn-default" href="/Blog/Index?blogId=@blogInfo.Id">详细 &raquo;</a></p>
+            <p><a class="btn btn-default" href="/Blog/Index?blogId=@blogInfo.Id">More &raquo;</a></p>
             @*<p>@Html.ActionLink("详细","Blog","Index",routeValues:null,htmlAttributes:new { Id=blogInfo.Id })</p>*@
         </div>
     }
