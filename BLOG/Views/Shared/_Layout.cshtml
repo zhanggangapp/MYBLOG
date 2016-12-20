@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -28,7 +28,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("目录", "List", "Home")</li>
-                    <li>@Html.ActionLink("攒写", "Index", "Admin")</li>
+                    <li>@Html.ActionLink("写作", "Index", "Admin")</li>
                     <li>@Html.ActionLink("登陆", "Index", "Login")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -39,10 +39,10 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - 我的博客</p>
+            <p>&copy; @DateTime.Now.Year - ZBHBLOG</p>
         </footer>
     </div>
-
+    
  
 </body>
 </html>
