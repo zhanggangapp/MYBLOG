@@ -454,7 +454,7 @@ namespace Utility
                     cmd.Parameters.Clear();
                     return reader;
                 }
-                catch (SqlException ex)
+                catch ()
                 {
                     //出现异常关闭连接并且释放
                     conn.Close();
