@@ -1,0 +1,27 @@
+
+@{
+    ViewBag.Title = "首页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Model;
+@using Common;
+<div class="row">
+    @foreach (BlogInfo blogInfo in (List<BlogInfo>)ViewData["list"])
+    {
+        <div class="col-md-12">
+            <h2>@blogInfo.Title</h2>
+            <p>
+                @blogInfo.Content
+            </p>
+            <p><a class="btn btn-default" href="/Blog/Index?blogId=@blogInfo.Id">详细 &raquo;</a></p>
+            @*<p>@Html.ActionLink("详细","Blog","Index",routeValues:null,htmlAttributes:new { Id=blogInfo.Id })</p>*@
+        </div>
+    }
+    <div class="col-md-12">
+        <nav>
+            <ul class="pagination">
+                @MvcHtmlString.Create(PageBar.GetPageBar((int)ViewData["pageIndex"], (int)ViewData["pageCount"]))
+            </ul>
+        </nav>
+    </div>
+</div>
