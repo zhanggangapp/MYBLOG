@@ -8,6 +8,7 @@ namespace Model
 {
    public class ArticleModel
     {
+
         public static IList<ArticleEntity> GetList()
         {
             IList<ArticleEntity> articleList = new List<ArticleEntity>();

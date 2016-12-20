@@ -1,0 +1,11 @@
+﻿done:
+basecontral统一验证
+
+todo:
+8.rss订阅
+10.url重写
+11.删除时弹出提醒
+1.异步获取分页数据
+6.添加（富文本编辑器）
+9.ElasticSearch支持
+

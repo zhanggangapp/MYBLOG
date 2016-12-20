@@ -21,5 +21,6 @@ namespace Model
             PostTime = DateTime.Now;
             PostUser = string.Empty;
         }
+
     }
 }

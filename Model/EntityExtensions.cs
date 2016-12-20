@@ -11,6 +11,7 @@ namespace Model
     {
         public static RSSEntity ToDefaultRss(this IList<ArticleEntity> articleList)
         {
+            
             RSSEntity rss = new RSSEntity()
             {
                 Title = "张刚的rss test",
@@ -27,6 +28,8 @@ namespace Model
                     Description= "张刚的测试内容img"
                 }
             };
+            if (articleList == null)
+                return rss;
             foreach (ArticleEntity article in articleList)
             {
                 rss.Items.Add(new RSSItem()
