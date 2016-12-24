@@ -13,6 +13,7 @@
             <p>
                @Html.Raw(blogInfo.Content)
             </p>
+            <p>@blogInfo.CreatedTime.ToShortDateString()</p>
             <p><a class="btn btn-default" href="/Blog/Index?blogId=@blogInfo.Id">More &raquo;</a></p>
             @*<p>@Html.ActionLink("详细","Blog","Index",routeValues:null,htmlAttributes:new { Id=blogInfo.Id })</p>*@
         </div>

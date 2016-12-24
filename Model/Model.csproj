@@ -43,6 +43,7 @@
     <Compile Include="ArticleEntity.cs" />
     <Compile Include="ArticleModel.cs" />
     <Compile Include="BlogInfo.cs" />
+    <Compile Include="CommentInfo.cs" />
     <Compile Include="EntityExtensions.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

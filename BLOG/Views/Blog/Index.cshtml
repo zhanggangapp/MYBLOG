@@ -3,16 +3,73 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="~/Scripts/MyAjaxForm.js"></script>
+<script>
+    $(function () {
+        commentAddClick();
+    })
+    function commentAddClick() {
+        $("#commentAddbtn").click(function () {
+            if ($("#mycontent").val() == "" || $("UserName").val=="") {
+                alert("没有输入姓名或内容,请输入!");
+                return;
+            }
+            $("#form1").ajaxSubmit({
+                type: "post",
+                url: "/Blog/CommentAdd",
+                success: function (data) {
+                    var serverData = data.split(':');
+                    if (serverData[0] == "ok") {
+                        $("#NewComment").append(serverData[1]+"<br/>");
+                        $("#result").css("display","block");
+                        $("#mycontent").val('');
+                    } else {
+                        alert('填写评论错误');
+                    }
+                },
+                error: function (data) {
+                    alert(data);
+                }
+            });//jquery.form.js --myajaxform.js
+        });
+    }
+</script>
 @using Model;
-
 @if (ViewData["blog"] != null)
 {
     BlogInfo blog = (BlogInfo)ViewData["blog"];
     <h2>@blog.Title</h2>
     <p>@Html.Raw(@blog.Content)</p>
     <p>@blog.CreatedTime.ToLongDateString()</p>
-
     <p><a class="btn btn-default" href="/Admin/EditBlog?Id=@blog.Id">修改 &raquo;</a><a class="btn btn-default" href="/Admin/DeleteBlog?Id=@blog.Id">删除 &raquo;</a></p>
 
-}
+   if (ViewData["listComment"] != null)
+   {
+    <h3>评论列表</h3>
+       foreach (CommentInfo commentInfo in (List<CommentInfo>)ViewData["listComment"])
+       {
+           <p>@commentInfo.UserName： @commentInfo.Comment 时间：@commentInfo.CreatedTime.ToShortDateString()</p>
+       }
+   }
+    <p id="NewComment" ></p>
 
+    <div id="result" class="alert alert-dismissable alert-warning" style="max-width:280px; display:none;">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <i class="glyphicon glyphicon-warning-sign">添加评论成功</i>
+    </div>
+    //using (Ajax.BeginForm("CommentAdd", "Blog", null, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterAdd" }, new { id = "form1" }))
+    using (Ajax.BeginForm("AddComment", "Blog", null, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterAdd" }, new { id = "form1" }))
+    {
+        <div class="form-group">
+            <label for="InputUser">姓名</label>
+            <input type="text" name="UserName" id="UserName" class="form-control" placeholder="姓名">
+        </div>
+        <div class="form-group">
+            <label for="lableforcommont">内容</label>
+            <textarea class="form-control" id="mycontent" rows="6" name="Comment" placeholder="内容"></textarea>
+        </div>
+        <input type="hidden" name="BlogId" id="BlogId" value="@blog.Id" />
+        @*<button type="submit" name="commentAdd" id="commentAddbtn" class="btn btn-default">提交</button>  草:用submit异步的茄子啊.*@
+        <button type="button" name="commentAdd" id="commentAddbtn" class="btn btn-default">提交</button>
+    }
+}

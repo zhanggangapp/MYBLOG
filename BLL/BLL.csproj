@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="ArticleInfoService.cs" />
     <Compile Include="BlogInfoService.cs" />
+    <Compile Include="CommentInfoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInfoService.cs" />
   </ItemGroup>
