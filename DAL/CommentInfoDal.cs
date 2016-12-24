@@ -14,7 +14,7 @@ namespace DAL
     {
         public List<CommentInfo> GetCommentList(int blogId)
         {
-            string sql = "SELECT * FROM dbo.CommentInfo WHERE BlogId =@BlogId order by id desc";
+            string sql = "SELECT * FROM dbo.CommentInfo WHERE BlogId =@BlogId order by id";
             SqlParameter[] pars = {
                 new SqlParameter("@BlogId",SqlDbType.Int)
             };
@@ -36,6 +36,7 @@ namespace DAL
         }
         private void LoadEntity(DataRow row,CommentInfo commentInfo)
         {
+            commentInfo.Id = Convert.ToInt32(row["Id"]);
             commentInfo.UserName = row["UserName"].ToString();
             commentInfo.Comment = row["Comment"].ToString();
             commentInfo.CreatedTime = Convert.ToDateTime(row["CreatedTime"]);
@@ -47,6 +48,14 @@ namespace DAL
             pars[0].Value = blogId;
             pars[1].Value = userName;
             pars[2].Value = comment;
+            int result = SqlHelper.ExecuteNonQuery(sql, CommandType.Text, pars);
+            return result;
+        }
+        public int DeleteCommentInfo(int CommentId)
+        {
+            string sql = "delete dbo.CommentInfo where Id=@CommentId";
+            SqlParameter[] pars = { new SqlParameter("@CommentId", SqlDbType.Int)};
+            pars[0].Value = CommentId;
             int result = SqlHelper.ExecuteNonQuery(sql, CommandType.Text, pars);
             return result;
         }

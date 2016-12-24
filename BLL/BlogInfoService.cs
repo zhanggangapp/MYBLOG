@@ -74,6 +74,7 @@ namespace BLL
             }
             return blogInfoDal.DeleteBlogInfo(blogid) > 0;
         }
+       
         
     }
 }

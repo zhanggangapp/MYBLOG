@@ -7,10 +7,11 @@
 <script>
     $(function () {
         commentAddClick();
+        commantDellClick();
     })
     function commentAddClick() {
         $("#commentAddbtn").click(function () {
-            if ($("#mycontent").val() == "" || $("UserName").val=="") {
+            if ($("#mycontent").val() == "" || $("UserName").val == "") {
                 alert("没有输入姓名或内容,请输入!");
                 return;
             }
@@ -20,8 +21,8 @@
                 success: function (data) {
                     var serverData = data.split(':');
                     if (serverData[0] == "ok") {
-                        $("#NewComment").append(serverData[1]+"<br/>");
-                        $("#result").css("display","block");
+                        $("#NewComment").append(serverData[1] + "<br/>");
+                        $("#result").css("display", "block");
                         $("#mycontent").val('');
                     } else {
                         alert('填写评论错误');
@@ -33,6 +34,34 @@
             });//jquery.form.js --myajaxform.js
         });
     }
+    function commantDellClick() {
+        $('a[name = "ayibu"]').click(function (e) {
+            var url = $(this).attr('href');
+            //$(this).attr('href', '#');
+            $(this).parent().remove();//直接删除掉其元素,这样就不存在a 再次执行一次get请求的问题了.
+            //alert('bb');
+            $.get(url, function (data) {
+                // alert(data);
+                $('#dresult').css("display", "block");
+                //$(this).unbind();
+            });
+          //  sleep(1000);
+            return false;
+        })
+    }
+
+    //function commantDellClick() {
+    //    $('span[name = "ayibu"]').click(function (e) {
+    //        var url = $(this).attr('title');
+    //        alert('bb');
+    //        $.get(url, function (data) {
+    //            alert(data);
+    //            //$(this).unbind();
+    //        });
+           
+    //    })
+    //}
+
 </script>
 @using Model;
 @if (ViewData["blog"] != null)
@@ -41,21 +70,30 @@
     <h2>@blog.Title</h2>
     <p>@Html.Raw(@blog.Content)</p>
     <p>@blog.CreatedTime.ToLongDateString()</p>
-    <p><a class="btn btn-default" href="/Admin/EditBlog?Id=@blog.Id">修改 &raquo;</a><a class="btn btn-default" href="/Admin/DeleteBlog?Id=@blog.Id">删除 &raquo;</a></p>
+    <p><a class="btn btn-default" href="/Admin/EditBlog?Id=@blog.Id">修改 &raquo;</a><a class="btn btn-default" href="/Admin/DeleteBlog?Id=@blog.Id" >删除 &raquo;</a></p>
 
-   if (ViewData["listComment"] != null)
-   {
-    <h3>评论列表</h3>
-       foreach (CommentInfo commentInfo in (List<CommentInfo>)ViewData["listComment"])
-       {
-           <p>@commentInfo.UserName： @commentInfo.Comment 时间：@commentInfo.CreatedTime.ToShortDateString()</p>
-       }
-   }
-    <p id="NewComment" ></p>
+    if (ViewData["listComment"] != null)
+    {
+        <h3>评论列表</h3>
+        foreach (CommentInfo commentInfo in (List<CommentInfo>)ViewData["listComment"])
+        {
+            <p>@commentInfo.UserName： @commentInfo.Comment 时间：@commentInfo.CreatedTime.ToShortDateString() 
+            @if (Session["user"] != null)
+            {
+                <a name="ayibu" title="@commentInfo.Id.ToString()" href="/Admin/DeleteComment?CommentId=@commentInfo.Id">[删除]</a>
+                @*<span name="ayibu" title="/Admin/DeleteComment?CommentId=@commentInfo.Id">[删除]</span>*@
+            } </p> @*a标签实现异步*@
+        }
+    }
+    <p id="NewComment"></p>
 
     <div id="result" class="alert alert-dismissable alert-warning" style="max-width:280px; display:none;">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <i class="glyphicon glyphicon-warning-sign">添加评论成功</i>
+    </div>
+    <div id="dresult" class="alert alert-dismissable alert-warning" style="max-width:280px; display:none;">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <i class="glyphicon glyphicon-warning-sign">删除评论成功</i>
     </div>
     //using (Ajax.BeginForm("CommentAdd", "Blog", null, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterAdd" }, new { id = "form1" }))
     using (Ajax.BeginForm("AddComment", "Blog", null, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterAdd" }, new { id = "form1" }))
@@ -69,7 +107,7 @@
             <textarea class="form-control" id="mycontent" rows="6" name="Comment" placeholder="内容"></textarea>
         </div>
         <input type="hidden" name="BlogId" id="BlogId" value="@blog.Id" />
-        @*<button type="submit" name="commentAdd" id="commentAddbtn" class="btn btn-default">提交</button>  草:用submit异步的茄子啊.*@
+        @*<button type="submit" name="commentAdd" id="commentAddbtn" class="btn btn-default">提交</button>  草:实现异步,类型不用是submit!*@
         <button type="button" name="commentAdd" id="commentAddbtn" class="btn btn-default">提交</button>
     }
 }

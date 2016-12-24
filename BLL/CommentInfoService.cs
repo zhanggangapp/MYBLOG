@@ -23,5 +23,13 @@ namespace BLL
             List<CommentInfo> list = commentInfoDal.GetCommentList(blogId);
             return list;
         }
+        public bool DeletCommentInfo(int Commentid)
+        {
+            if (Commentid == 0)
+            {
+                return false;
+            }
+            return commentInfoDal.DeleteCommentInfo(Commentid) > 0;
+        }
     }
 }

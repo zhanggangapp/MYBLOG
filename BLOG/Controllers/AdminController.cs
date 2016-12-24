@@ -13,6 +13,7 @@ namespace BLOG.Controllers
     public class AdminController : BaseController
     {
         BLL.BlogInfoService blogService = new BLL.BlogInfoService();
+        BLL.CommentInfoService commentService = new CommentInfoService();
 
         // GET: Admin
         public ActionResult Index()
@@ -75,6 +76,14 @@ namespace BLOG.Controllers
                 ViewData["blog"] = blog;
             }
             return View();
+        }
+        public ActionResult DeleteComment()
+        {
+            int CommentId = Convert.ToInt32(Request["CommentId"]);
+            if (commentService.DeletCommentInfo(CommentId))
+                return Content("ok:删除成功");
+            else
+                return Content("no:删除失败");
         }
         public ActionResult DeleteBlog()
         {
