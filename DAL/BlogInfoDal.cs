@@ -7,6 +7,8 @@ using System.Data;
 using System.Data.SqlClient;
 using Utility;
 using Model;
+using System.Text.RegularExpressions;
+
 namespace DAL
 {
     public class BlogInfoDal
@@ -155,7 +157,13 @@ namespace DAL
         {
             blogInfo.Id = Convert.ToInt32(row["Id"]);
             blogInfo.Title = row["Title"] != DBNull.Value ? row["Title"].ToString() : string.Empty;
-            blogInfo.Content = row["Content"].ToString();
+            //首页只显示第一个<p></p>内容即可.
+            Regex re = new Regex("<p>(?<content>[\\w\\W]*?)</p>");
+            Match m = re.Match(row["Content"].ToString());
+            if (m.Success)
+                blogInfo.Content = m.Groups["content"].Value.Substring(0, m.Groups["content"].Value.Length < 300 ? m.Groups["content"].Length : 300);
+            else
+                blogInfo.Content = row["Content"].ToString();
             blogInfo.CreatedTime = Convert.ToDateTime(row["CreatedTime"]);
         }
         private void LoadTitleEntity(DataRow row, BlogInfo blogInfo)

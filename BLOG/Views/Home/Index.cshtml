@@ -1,6 +1,6 @@
 
 @{
-    ViewBag.Title = "ZBH博客";
+    ViewBag.Title = "BLOG";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using Model;
@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <h2>@blogInfo.Title</h2>
             <p>
-                @blogInfo.Content
+               @Html.Raw(blogInfo.Content)
             </p>
             <p><a class="btn btn-default" href="/Blog/Index?blogId=@blogInfo.Id">More &raquo;</a></p>
             @*<p>@Html.ActionLink("详细","Blog","Index",routeValues:null,htmlAttributes:new { Id=blogInfo.Id })</p>*@

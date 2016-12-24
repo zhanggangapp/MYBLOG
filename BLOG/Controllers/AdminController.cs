@@ -22,22 +22,38 @@ namespace BLOG.Controllers
             string Context = Request["Content"];
             return View();
         }
-        public ActionResult AddBlog()
+        //第一种添加方法
+        //[ValidateInput(false)]
+        //public ActionResult AddBlog()
+        //{
+        //    if (Request.IsPostBack())
+        //    {
+        //        string title = Request["Title"];
+        //        string content = Request["Content"];
+        //        if (blogService.AddBlogInfo(title, content))
+        //        {
+        //            //BlogInfo blog = new BlogInfo() { Title = Title, Content = context, CreatedTime = DateTime.Now };
+        //            //ViewData["blog"] = blog;
+        //            return RedirectToAction("Index", "Home");
+        //        }
+        //    }
+        //    return View();
+
+        //}
+
+        [ValidateInput(false)]
+        public ActionResult AddBlog(BlogInfo bloginfo)
         {
             if (Request.IsPostBack())
             {
-                string title = Request["Title"];
-                string content = Request["Content"];
-                if (blogService.AddBlogInfo(title, content))
+                if (blogService.AddBlogInfo(bloginfo.Title, bloginfo.Content))
                 {
-                    //BlogInfo blog = new BlogInfo() { Title = Title, Content = context, CreatedTime = DateTime.Now };
-                    //ViewData["blog"] = blog;
                     return RedirectToAction("Index", "Home");
                 }
             }
             return View();
-
         }
+        [ValidateInput(false)]
         public ActionResult EditBlog()
         {
             int BlogId = Convert.ToInt32(Request["Id"]);

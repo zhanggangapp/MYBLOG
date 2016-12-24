@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - 我的博客</title>
+    <title>我的博客</title>
     @using System.Web.Optimization;
     @*@Styles.Render("~/Content/css")*@
     @System.Web.Optimization.Styles.Render("~/Content/css")
@@ -39,6 +39,7 @@
         @RenderBody()
         <hr />
         <footer>
+            <p>评论列表</p>
             <p>&copy; @DateTime.Now.Year - ZBHBLOG</p>
         </footer>
     </div>

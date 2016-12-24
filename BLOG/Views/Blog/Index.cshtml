@@ -9,7 +9,7 @@
 {
     BlogInfo blog = (BlogInfo)ViewData["blog"];
     <h2>@blog.Title</h2>
-    <p>@blog.Content</p>
+    <p>@Html.Raw(@blog.Content)</p>
     <p>@blog.CreatedTime.ToLongDateString()</p>
 
     <p><a class="btn btn-default" href="/Admin/EditBlog?Id=@blog.Id">修改 &raquo;</a><a class="btn btn-default" href="/Admin/DeleteBlog?Id=@blog.Id">删除 &raquo;</a></p>
