@@ -24,12 +24,13 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("ZBHBlog首页", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
+            </div> 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("目录", "List", "Home")</li>
-                    <li>@Html.ActionLink("写作", "Index", "Admin")</li>
-                    <li>@Html.ActionLink("登陆", "Index", "Login")</li>
+                    <li>@Html.ActionLink("目录", "List", "Home",new { area = "",id = "1" },new { @class = "navbar-brand" })</li>
+                    <li>@Html.ActionLink("写作", "Index", "Admin",null, new { @class = "navbar-brand" })</li>
+
+                    <li>@Html.ActionLink("登陆", "Index", "Login", null, new { @class = "navbar-brand" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
