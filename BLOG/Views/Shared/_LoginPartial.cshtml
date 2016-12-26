@@ -1,10 +1,15 @@
 ﻿<ul class="nav navbar-nav navbar-right">
-    <form class="navbar-form navbar-left" role="search" method="post" action="~/Home/SearchList">
-        <div class="form-group">
-            <input type="text" name="keyword" class="form-control" placeholder="关键字">
-        </div>
-        <button type="submit" class="btn btn-default">搜索</button>
-    </form>
+    <li style="padding-right:50px;">
+        <form class="navbar-form navbar-left" role="search" method="post" action="~/Home/SearchList/1">
+            <div class="form-group">
+                <input type="text" name="keyword" class="form-control" placeholder="关键字">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+
+        </form>
+    </li>
+    <li>&nbsp;&nbsp;&nbsp;@Html.ActionLink("订阅", "Index", "Rss", null, new { @class = "navbar-brand", @style = "color:white" })</li>
+
     @*<li>@Html.ActionLink("注册", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
     @*<li>@Html.ActionLink("登录", "Index", "Login", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
 </ul>

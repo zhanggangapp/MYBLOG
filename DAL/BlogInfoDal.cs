@@ -146,7 +146,7 @@ namespace DAL
         }
         public int DeleteBlogInfo(int blogid)
         {
-            string sql = "delete dbo.BlogInfo WHERE id =@id";
+            string sql = "delete dbo.CommentInfo where BlogId=@id;delete dbo.BlogInfo WHERE id =@id";
             SqlParameter[] pars = { new SqlParameter("@id", SqlDbType.Int) };
             pars[0].Value = blogid;
             int result = SqlHelper.ExecuteNonQuery(sql, CommandType.Text, pars);

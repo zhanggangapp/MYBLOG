@@ -57,6 +57,22 @@ namespace BLOG.Controllers
                 List<BlogInfo> list = blogInfoService.GetBlogTitleListByKeyWord(pageIndex, pageSize, keyword);//获取分页数据
                 ViewData["searchlist"] = list;
 
+                Session["keyword"] = keyword;
+                //分布码使用
+                ViewData["pageIndex"] = pageIndex;
+                ViewData["pageCount"] = pageCount;
+            }
+            else//翻页时,为get 请求.
+            {
+                int pageIndex = Request["pageIndex"] != null ? int.Parse(Request["pageIndex"]) : 1;
+                int pageSize = 15;
+                string keyword = Session["keyword"] != null ? Session["keyword"].ToString() : "博客";
+                int pageCount = blogInfoService.GetBlogListCountByKeyWord(pageSize, keyword);
+                pageIndex = pageIndex < 1 ? 1 : pageIndex;
+                pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
+                List<BlogInfo> list = blogInfoService.GetBlogTitleListByKeyWord(pageIndex, pageSize, keyword);//获取分页数据
+                ViewData["searchlist"] = list;
+
                 //分布码使用
                 ViewData["pageIndex"] = pageIndex;
                 ViewData["pageCount"] = pageCount;

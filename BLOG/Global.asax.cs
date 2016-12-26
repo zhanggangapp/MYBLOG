@@ -26,9 +26,9 @@ namespace BLOG
             Regex regex3 = new Regex(@"Blog/Index/(\d+)");
 
             Regex regex = new Regex(@"Index/(\d+)");
-            Regex regex2 = new Regex(@"List/(\d+)");
+            Regex regex2 = new Regex(@"/List/(\d+)");
             Regex regex0 = new Regex(@"~/(\d+)");
-
+            Regex regex1 = new Regex(@"SearchList/(\d+)");
             if (regex3.IsMatch(exePath))
             {
                 var realPath = regex3.Replace(exePath, @"Blog/Index?blogId=$1");
@@ -48,7 +48,12 @@ namespace BLOG
             else if (regex2.IsMatch(exePath))
             {
                 //当前是伪静态格式
-                var realPath = regex2.Replace(exePath, @"List?pageIndex=$1");
+                var realPath = regex2.Replace(exePath, @"/List?pageIndex=$1");
+                Context.RewritePath(realPath);
+            }
+            else if(regex1.IsMatch(exePath))
+            {
+                var realPath = regex1.Replace(exePath, @"SearchList?pageIndex=$1");
                 Context.RewritePath(realPath);
             }
              
