@@ -1,4 +1,5 @@
-﻿done:
+﻿done：
+
 1.bootstrap部署
 2.三层构架+mvc.
 3.basecontral统一验证
@@ -8,13 +9,17 @@
 
 
 
-todo:
+todo：
+
+9.ElasticSearch支持
 8.rss订阅
 10.url重写
 11.删除时弹出提醒
 1.异步获取分页数据
 
-9.ElasticSearch支持
+
+
+
 
 
 

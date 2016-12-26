@@ -315,6 +315,7 @@
     <Content Include="kindeditor\themes\qq\editor.gif" />
     <Content Include="kindeditor\themes\qq\qq.css" />
     <Content Include="kindeditor\themes\simple\simple.css" />
+    <Content Include="myblog.sql" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
