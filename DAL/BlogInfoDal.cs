@@ -15,7 +15,7 @@ namespace DAL
     {
         public List<BlogInfo> GetBlogListByPage(int start, int end)
         {
-            string sql = "SELECT * FROM ( SELECT ROW_NUMBER() OVER (ORDER BY id DESC ) AS num, * FROM dbo.BlogInfo ) AS t WHERE t.num>=@start AND t.num<=@end";
+            string sql = "SELECT * FROM ( SELECT ROW_NUMBER() OVER (ORDER BY id DESC ) AS num,Id,Title,dbo.GetSubstring(Content,400) as Content,CreatedTime FROM dbo.BlogInfo ) AS t WHERE t.num>=@start AND t.num<=@end";
             SqlParameter[] pars = {
                 //new SqlParameter("@start",start),
                 //new SqlParameter("@end",end)
@@ -157,13 +157,16 @@ namespace DAL
         {
             blogInfo.Id = Convert.ToInt32(row["Id"]);
             blogInfo.Title = row["Title"] != DBNull.Value ? row["Title"].ToString() : string.Empty;
-            //首页只显示第一个<p></p>内容即可.
-            Regex re = new Regex("<p>(?<content>[\\w\\W]*?)</p>");
-            Match m = re.Match(row["Content"].ToString());
-            if (m.Success)
-                blogInfo.Content = m.Groups["content"].Value.Substring(0, m.Groups["content"].Value.Length < 300 ? m.Groups["content"].Length : 300);
-            else
-                blogInfo.Content = row["Content"].ToString();
+            //首页只显示第一个<p></p>内容即可. 匹配经常失败,由于<p class="..不能匹配.
+            //Regex re = new Regex("<p>(?<content>[\\w\\W]*?)</p>");
+            //Match m = re.Match(row["Content"].ToString());
+            //if (m.Success)
+            //    blogInfo.Content = m.Groups["content"].Value.Substring(0, m.Groups["content"].Value.Length < 300 ? m.Groups["content"].Length : 300);
+            //else
+            //    blogInfo.Content = row["Content"].ToString();
+
+            //blogInfo.Content = util.TrimHtml(row["Content"].ToString(), true);
+            blogInfo.Content = row["Content"].ToString();
             blogInfo.CreatedTime = Convert.ToDateTime(row["CreatedTime"]);
         }
         private void LoadTitleEntity(DataRow row, BlogInfo blogInfo)
