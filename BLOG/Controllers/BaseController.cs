@@ -12,7 +12,7 @@ namespace BLOG.Controllers
         {
             if (Session["user"] == null)
             {
-                filterContext.Result = RedirectToRoute(new { Controller = "Login", Action = "Index", Url = Request.Url.ToString() });
+                filterContext.Result = RedirectToRoute(new { Controller = "Login", Action = "Index",Url= Request.Url.ToString() });
             }
             base.OnActionExecuting(filterContext);
         }

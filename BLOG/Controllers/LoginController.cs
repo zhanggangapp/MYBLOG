@@ -53,14 +53,21 @@ namespace BLOG.Controllers
                 {
                     // return RedirectToAction("Index","Admin");
                     Session["user"] = email;
-                    if (Request["Url"]!=null)
-                    {
-                        return Redirect(Request["Url"]);
-                    }
+                    //todo:zhanggang:这里返回地址后面再搞.应该反回登陆前访问的地址
+                    //if (((System.Web.HttpRequestWrapper)Request).UrlReferrer.Query != null)
+                    //    return Redirect(((System.Web.HttpRequestWrapper)Request).UrlReferrer.Query.Replace("?Url=",""));
+                    //else
+                        return RedirectToAction("Index", "Home");
                 }
                
             }
             return View();
+        }
+
+        public ActionResult LoginOut()
+        {
+            Session["user"] = null;
+            return RedirectToAction("Index", "Home");
         }
         public ActionResult Test()
         {

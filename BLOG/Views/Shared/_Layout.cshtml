@@ -23,13 +23,21 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("ZBHBlog首页", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
+                @Html.ActionLink("ZBHBlog首页", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "color:white" })
+            </div> 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("目录", "List", "Home")</li>
-                    <li>@Html.ActionLink("写作", "Index", "Admin")</li>
-                    <li>@Html.ActionLink("登陆", "Index", "Login")</li>
+                    <li>@Html.ActionLink("目录", "List", "Home",new { area = "",id = "1" },new { @class = "navbar-brand", @style = "color:white" })</li>
+                    <li>@Html.ActionLink("写作", "Index", "Admin",null, new { @class = "navbar-brand", @style = "color:white" })</li>
+                    @if (Session["user"] == null)
+                    {
+                        <li>@Html.ActionLink("登陆", "Index", "Login", null, new { @class = "navbar-brand", @style = "color:white" })</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("退出", "LoginOut", "Login", null, new { @class = "navbar-brand", @style = "color:white" })</li>
+                    }
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

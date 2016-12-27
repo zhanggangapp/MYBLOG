@@ -33,7 +33,7 @@ namespace Common
                 }
                 else
                 {
-                    sb.Append(string.Format("<li><a href='?pageIndex={0}'>{0}</a></li>", i));
+                    sb.Append(string.Format("<li><a href='{0}'>{0}</a></li>", i));
                 }
             }
             return sb.ToString();

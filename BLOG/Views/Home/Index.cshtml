@@ -9,12 +9,12 @@
     @foreach (BlogInfo blogInfo in (List<BlogInfo>)ViewData["list"])
     {
         <div class="col-md-12">
-            <h2>@blogInfo.Title</h2>
+            <h4><a href="/Blog/Index/@blogInfo.Id"><b>@blogInfo.Title</b></a></h4>
             <p>
                @Html.Raw(blogInfo.Content)
             </p>
             <p>@blogInfo.CreatedTime.ToShortDateString()</p>
-            <p><a class="btn btn-default" href="/Blog/Index?blogId=@blogInfo.Id">More &raquo;</a></p>
+            <p><a class="btn btn-default" href="/Blog/Index/@blogInfo.Id">More &raquo;</a></p>
             @*<p>@Html.ActionLink("详细","Blog","Index",routeValues:null,htmlAttributes:new { Id=blogInfo.Id })</p>*@
         </div>
     }

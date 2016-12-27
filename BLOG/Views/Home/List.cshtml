@@ -12,7 +12,7 @@
     @foreach (BlogInfo blogInfo in (List<BlogInfo>)ViewData["list"])
     {
         <div class="col-md-12">
-            <p><a href="/Blog/Index?blogId=@blogInfo.Id">@blogInfo.Title  </a>@blogInfo.CreatedTime.ToLongDateString()</p>
+            <p><a href="/Blog/Index/@blogInfo.Id">@blogInfo.Title  </a>@blogInfo.CreatedTime.ToLongDateString()</p>
         </div>
     }
     <div class="col-md-12">
