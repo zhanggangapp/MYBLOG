@@ -5,13 +5,35 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 using Model;
+using System.Web;
+
 namespace BLL
 {
     public class BlogInfoService
     {
-        DAL.BlogInfoDal blogInfoDal = new BlogInfoDal();
+        static int DataType;
+        IBlogInfoDal blogInfoDal;
+
+        public BlogInfoService()
+        {
+            DataType = Convert.ToInt32(HttpContext.Current.Application["DataType"]);
+            switch (DataType)
+            {
+                case 0:
+                    blogInfoDal = new BlogInfoSQLDal();
+                    break;
+                case 2:
+                    blogInfoDal = new BlogInfoESDal();
+                    break;
+                default:
+                    blogInfoDal = new BlogInfoSQLDal();
+                    break;
+            }
+        }
+
         public List<BlogInfo> GetBlogListByPag(int pageIndex,int pageSize)
         {
+            
             int start = (pageIndex - 1) * pageSize + 1;
             int end = pageIndex * pageSize;
             List<BlogInfo> list = blogInfoDal.GetBlogListByPage(start, end);

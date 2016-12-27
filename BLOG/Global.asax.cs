@@ -11,11 +11,13 @@ namespace BLOG
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        //public static int DATATYPE;
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            Application["DataType"] = System.Configuration.ConfigurationManager.AppSettings["DataType"];
         }
         protected void Application_BeginRequest(object sender,EventArgs e)
         {

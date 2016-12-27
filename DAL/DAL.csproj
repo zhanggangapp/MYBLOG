@@ -41,8 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArticleInfoDal.cs" />
-    <Compile Include="BlogInfoDal.cs" />
+    <Compile Include="BlogInfoESDal.cs" />
+    <Compile Include="BlogInfoSQLDal.cs" />
     <Compile Include="CommentInfoDal.cs" />
+    <Compile Include="IBlogInfoDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInfoDal.cs" />
   </ItemGroup>
