@@ -69,7 +69,7 @@
     BlogInfo blog = (BlogInfo)ViewData["blog"];
     <h2>@blog.Title</h2>
     <p>@Html.Raw(@blog.Content)</p>
-    <p>发于：@blog.CreatedTime.ToLongDateString()</p>
+    <p>发布于：@blog.CreatedTime.ToLongDateString()</p>
     if(Session["user"] != null)
     {
         <p><a class="btn btn-default" href="/Admin/EditBlog?Id=@blog.Id">修改 &raquo;</a><a class="btn btn-default" href="/Admin/DeleteBlog?Id=@blog.Id">删除 &raquo;</a></p>
