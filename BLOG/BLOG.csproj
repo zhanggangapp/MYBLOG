@@ -337,7 +337,6 @@
     <Content Include="Scripts\respond.min.js" />
     <None Include="Scripts\_references.js" />
     <Content Include="sql.txt" />
-    <Content Include="task.txt" />
     <Content Include="Web.config" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Blog\Index.cshtml" />
