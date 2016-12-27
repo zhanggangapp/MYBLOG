@@ -7,11 +7,25 @@
 <form role="form" action="~/Login/Index" method="post">
     <div class="form-group">
         <label for="exampleInputEmail1">邮箱</label>
-        <input type="text" name="Email" class="form-control" placeholder="邮箱">
+        @if (ViewData["email"] == null)
+        {
+            <input type="text" name="Email" class="form-control" placeholder="邮箱" />
+         }
+        else
+        {
+            <input type="text" name="Email" class="form-control" placeholder="邮箱" value=@ViewData["email"] />
+        }
     </div>
     <div class="form-group">
         <label for="exampleInputPassword1">密码</label>
-        <input class="form-control" name="Password" placeholder="密码" />
+        @if (ViewData["password"] == null)
+        {
+            <input class="form-control" name="Password" placeholder="密码" />
+        }
+        else
+        {
+            <input class="form-control" name="Password" placeholder="密码" value=@ViewData["password"] />
+        }
     </div>
     <div class="form-group">
         <label for="vcode">验证码</label>

@@ -19,8 +19,8 @@ namespace BLOG.Controllers
             pageIndex = pageIndex < 1 ? 1 : pageIndex;
             pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
             List<BlogInfo> list = blogInfoService.GetBlogListByPag(pageIndex, pageSize);//获取分页数据
+           
             ViewData["list"] = list;
-
             //分布码使用
             ViewData["pageIndex"] = pageIndex;
             ViewData["pageCount"] = pageCount;

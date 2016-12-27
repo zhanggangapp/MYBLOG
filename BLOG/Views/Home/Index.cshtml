@@ -6,23 +6,27 @@
 @using Model;
 @using Common;
 <div class="row">
-    @foreach (BlogInfo blogInfo in (List<BlogInfo>)ViewData["list"])
+    @if (ViewData["list"] != null)
     {
+        foreach (BlogInfo blogInfo in (List<BlogInfo>)ViewData["list"])
+        {
+            <div class="col-md-12">
+                <h4><a href="/Blog/Index/@blogInfo.Id"><b>@blogInfo.Title</b></a></h4>
+                <p>
+                    @Html.Raw(blogInfo.Content)
+                </p>
+                <p>@blogInfo.CreatedTime.ToShortDateString()</p>
+                <p><a class="btn btn-default" href="/Blog/Index/@blogInfo.Id">More &raquo;</a></p>
+                @*<p>@Html.ActionLink("详细","Blog","Index",routeValues:null,htmlAttributes:new { Id=blogInfo.Id })</p>*@
+            </div>
+        }
         <div class="col-md-12">
-            <h4><a href="/Blog/Index/@blogInfo.Id"><b>@blogInfo.Title</b></a></h4>
-            <p>
-               @Html.Raw(blogInfo.Content)
-            </p>
-            <p>@blogInfo.CreatedTime.ToShortDateString()</p>
-            <p><a class="btn btn-default" href="/Blog/Index/@blogInfo.Id">More &raquo;</a></p>
-            @*<p>@Html.ActionLink("详细","Blog","Index",routeValues:null,htmlAttributes:new { Id=blogInfo.Id })</p>*@
+            <nav>
+                <ul class="pagination">
+                    @MvcHtmlString.Create(PageBar.GetPageBar((int)ViewData["pageIndex"], (int)ViewData["pageCount"]))
+                </ul>
+            </nav>
         </div>
     }
-    <div class="col-md-12">
-        <nav>
-            <ul class="pagination">
-                @MvcHtmlString.Create(PageBar.GetPageBar((int)ViewData["pageIndex"], (int)ViewData["pageCount"]))
-            </ul>
-        </nav>
-    </div>
+   
 </div>

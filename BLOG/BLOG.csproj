@@ -110,6 +110,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="asp.net\demo.aspx" />
+    <Content Include="asp.net\README.txt" />
+    <Content Include="attached\file\20161227\20161227000045_2890.txt" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
@@ -328,6 +331,8 @@
     <Content Include="handlers\vcode.ashx" />
     <Content Include="kindeditor\asp.net\file_manager_json.ashx" />
     <Content Include="kindeditor\asp.net\upload_json.ashx" />
+    <Content Include="asp.net\file_manager_json.ashx" />
+    <Content Include="asp.net\upload_json.ashx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

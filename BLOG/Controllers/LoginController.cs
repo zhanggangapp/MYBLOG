@@ -43,11 +43,21 @@ namespace BLOG.Controllers
                 if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(vcode))
                 {
                     ViewData["result"] = "邮箱或密码或验证码未输入,或不正常,请重新输入";
+                    ViewData["email"] = string.IsNullOrEmpty(email) ? "" : email;
+                    ViewData["password"] = string.IsNullOrEmpty(password) ? "" : password;
                 }
                 else if (!userInfoService.IsExist(email, password))
                 {
-
                     ViewData["result"] = "用户或密码错误,请重新输入";
+                    ViewData["email"] = string.IsNullOrEmpty(email) ? "" : email;
+                    ViewData["password"] = string.IsNullOrEmpty(password) ? "" : password;
+                }
+                else if (Session["vcode"].ToString()!=vcode)
+                {
+                    ViewData["result"] = "验证码错误,请重新输入";
+                    ViewData["email"] = string.IsNullOrEmpty(email) ? "" : email;
+                    ViewData["password"] = string.IsNullOrEmpty(password) ? "" : password;
+
                 }
                 else
                 {
