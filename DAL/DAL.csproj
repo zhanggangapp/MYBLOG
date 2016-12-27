@@ -43,6 +43,7 @@
     <Compile Include="ArticleInfoDal.cs" />
     <Compile Include="BlogInfoESDal.cs" />
     <Compile Include="BlogInfoSQLDal.cs" />
+    <Compile Include="BlogInfoXMLDal.cs" />
     <Compile Include="CommentInfoDal.cs" />
     <Compile Include="IBlogInfoDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -17,7 +17,7 @@
             }
             $("#form1").ajaxSubmit({
                 type: "post",
-                url: "/Blog/CommentAdd",
+                url: "~/Blog/CommentAdd",
                 success: function (data) {
                     var serverData = data.split(':');
                     if (serverData[0] == "ok") {
@@ -72,7 +72,7 @@
     <p>发布于：@blog.CreatedTime.ToLongDateString()</p>
     if(Session["user"] != null)
     {
-        <p><a class="btn btn-default" href="/Admin/EditBlog?Id=@blog.Id">修改 &raquo;</a><a class="btn btn-default" href="/Admin/DeleteBlog?Id=@blog.Id">删除 &raquo;</a></p>
+        <p><a class="btn btn-default" href="~/Admin/EditBlog?Id=@blog.Id">修改 &raquo;</a><a class="btn btn-default" href="~/Admin/DeleteBlog?Id=@blog.Id">删除 &raquo;</a></p>
     }
 
     if (ViewData["listComment"] != null)
@@ -83,8 +83,8 @@
             <p>@commentInfo.UserName： @commentInfo.Comment 时间：@commentInfo.CreatedTime.ToShortDateString() 
             @if (Session["user"] != null)
             {
-                <a name="ayibu" title="@commentInfo.Id.ToString()" href="/Admin/DeleteComment?CommentId=@commentInfo.Id">[删除]</a>
-                @*<span name="ayibu" title="/Admin/DeleteComment?CommentId=@commentInfo.Id">[删除]</span>*@
+                <a name="ayibu" title="@commentInfo.Id.ToString()" href="~/Admin/DeleteComment?CommentId=@commentInfo.Id">[删除]</a>
+                @*<span name="ayibu" title="~/Admin/DeleteComment?CommentId=@commentInfo.Id">[删除]</span>*@
             } </p> @*a标签实现异步*@
         }
     }

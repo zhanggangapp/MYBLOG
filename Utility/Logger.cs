@@ -11,7 +11,7 @@ namespace Utility
     {
         public static void Log(string s)
         {
-            StreamWriter sw = new StreamWriter("c:\\ZBHBlog.txt", true, Encoding.Default);
+            StreamWriter sw = new StreamWriter("c:\\U9Blog.txt", true, Encoding.Default);
             sw.WriteLine(System.DateTime.Now.ToString("yyyyMMddhhmmss")+"----"+s);
             sw.Close();
         }

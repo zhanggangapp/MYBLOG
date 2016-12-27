@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的博客</title>
+    <title>U9Blog</title>
     @using System.Web.Optimization;
     @*@Styles.Render("~/Content/css")*@
     @System.Web.Optimization.Styles.Render("~/Content/css")
@@ -23,7 +23,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("ZBHBlog首页", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "color:white" })
+                @Html.ActionLink("U9Blog", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "color:white" })
             </div> 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -47,7 +47,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - ZBHBLOG</p>
+            <p>&copy; @DateTime.Now.Year - U9Blog</p>
         </footer>
     </div>
 
