@@ -66,7 +66,7 @@ namespace ConsoleTest
 
 
         }
-        public void Run1()
+        public void Run1()//线程执行的方法需要参数,则必须是Object类型.
         {
             int i = 0;
             while (i++ < 10)
