@@ -14,6 +14,15 @@ namespace BLOG.Controllers
         // GET: Login
         public ActionResult Index()
         {
+
+            //使用es存储时,先不用登陆.todo
+            if (Convert.ToInt32(HttpContext.Application["DataType"])==2)
+            {
+                Session["user"] = "zhanggang@outlook.com";
+                return RedirectToAction("Index", "Home");
+            }
+
+
             //if (Request.HttpMethod.Equals("post",StringComparison.InvariantCultureIgnoreCase))
             //{
             //    //回发回来的数据
