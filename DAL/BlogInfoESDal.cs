@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Model;
-
+using Utility;
 namespace DAL
 {
     public class BlogInfoESDal : IBlogInfoDal
@@ -18,6 +18,15 @@ namespace DAL
             //    pars[1].Value = content;
             //    int result = SqlHelper.ExecuteNonQuery(sql, CommandType.Text, pars);
             //    return result;
+            var bloginfo = new BlogInfo
+            {
+                Id=1,
+                Title=title,
+                Content=content,
+                CreatedTime=System.DateTime.Now
+            };
+            var response = ESHelperf.client.Index(bloginfo);
+
             return 1;
         }
 
@@ -38,16 +47,19 @@ namespace DAL
 
         public int GetBlogCount()
         {
+            return 1;
             throw new NotImplementedException();
         }
 
         public int GetBlogListByKeyWordCount(string keyword)
         {
+            return 1;
             throw new NotImplementedException();
         }
 
         public List<BlogInfo> GetBlogListByPage(int start, int end)
         {
+            return null;
             throw new NotImplementedException();
         }
 
