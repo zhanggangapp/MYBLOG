@@ -36,7 +36,7 @@
 
 <h2>修改</h2>
 <form role="form" method="post" action="~/Admin/EditBlog">
-    @if (ViewData["blog"] != null && ((BlogInfo)ViewData["blog"]).Id > 0)
+    @if (ViewData["blog"] != null && ((BlogInfo)ViewData["blog"]).BlogId > 0)
     {
         BlogInfo blog = (BlogInfo)ViewData["blog"];
         <div class="form-group">
@@ -47,7 +47,7 @@
             <label for="exampleInputPassword1">内容</label>
             <textarea class="form-control" id="content1" rows="8" name="Content" placeholder="内容" style="width:100%;height:400px;visibility:hidden;">@blog.Content</textarea>
         </div>
-        <input type="hidden" name="Id" value="@blog.Id" />
+        <input type="hidden" name="Id" value="@blog.BlogId" />
         <button type="submit" class="btn btn-default">修改</button>
     }
     else

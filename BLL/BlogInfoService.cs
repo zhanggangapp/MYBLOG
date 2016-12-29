@@ -11,12 +11,11 @@ namespace BLL
 {
     public class BlogInfoService
     {
-        static int DataType;
         IBlogInfoDal blogInfoDal;
 
         public BlogInfoService()
         {
-            DataType = Convert.ToInt32(HttpContext.Current.Application["DataType"]);
+           int DataType = Convert.ToInt32(HttpContext.Current.Application["DataType"]);
             switch (DataType)
             {
                 case 0:
@@ -66,7 +65,7 @@ namespace BLL
             int pageCount = Convert.ToInt32(Math.Ceiling((double)blogCount / pageSize));
             return pageCount;
         }
-        public BlogInfo GetBlogById(int id)
+        public BlogInfo GetBlogById(long id)
         {
             return blogInfoDal.GetBlogById(id);
         }
@@ -79,7 +78,7 @@ namespace BLL
             return blogInfoDal.AddBlogInfo(title,content) > 0;
 
         }
-        public bool EditBlogInfo(int blogid, string title, string content)
+        public bool EditBlogInfo(long blogid, string title, string content)
         {
             if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(content) || blogid==0)
             {

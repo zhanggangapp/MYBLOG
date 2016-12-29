@@ -13,7 +13,7 @@ namespace DAL
     {
         public List<ArticleEntity> GetArticleList(DateTime beginTime)
         {
-            string sql = "SELECT Id,Title,CreatedTime,Content FROM dbo.BlogInfo WHERE CreatedTime>@beginTime ORDER BY id DESC";
+            string sql = "SELECT BlogId,Title,CreatedTime,Content FROM dbo.BlogInfo WHERE CreatedTime>@beginTime ORDER BY BlogId DESC";
             SqlParameter[] pars = {
                new SqlParameter("@beginTime",System.Data.SqlDbType.DateTime)
             };
@@ -35,7 +35,7 @@ namespace DAL
         }
         private void LoadArticleEntity(DataRow row, ArticleEntity articleInfo)
         {
-            articleInfo.ID = Convert.ToInt32(row["Id"]);
+            articleInfo.BlogId = Convert.ToInt64(row["BlogId"]);
             articleInfo.Title = row["Title"] != DBNull.Value ? row["Title"].ToString() : string.Empty;
             articleInfo.PostTime = Convert.ToDateTime(row["CreatedTime"]);
         }

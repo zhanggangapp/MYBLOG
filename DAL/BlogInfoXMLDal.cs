@@ -15,17 +15,17 @@ namespace DAL
             throw new NotImplementedException();
         }
 
-        public int DeleteBlogInfo(int blogid)
+        public int DeleteBlogInfo(long blogid)
         {
             throw new NotImplementedException();
         }
 
-        public int EditBlogInfo(int blogid, string title, string content)
+        public int EditBlogInfo(long blogid, string title, string content)
         {
             throw new NotImplementedException();
         }
 
-        public BlogInfo GetBlogById(int id)
+        public BlogInfo GetBlogById(long id)
         {
             throw new NotImplementedException();
         }

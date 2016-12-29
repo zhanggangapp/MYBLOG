@@ -10,12 +10,12 @@ namespace DAL
 {
     public class CommentInfoESDal : ICommentInfoDal
     {
-        public int AddCommentInfo(int blogId, string userName, string comment)
+        public int AddCommentInfo(long blogId, string userName, string comment)
         {
 
             var commentinfo = new CommentInfo
             {
-                Id = Convert.ToInt64(System.DateTime.Now.ToString("yyyyMMddhhmmssffff")),
+                CommentId = Convert.ToInt64(System.DateTime.Now.ToString("yyyyMMddhhmmssffff")),
                 BlogId = blogId,
                 UserName = userName,
                 Comment = comment,
@@ -28,15 +28,22 @@ namespace DAL
             return 0;
         }
 
-        public int DeleteCommentInfo(int CommentId)
+        public int DeleteCommentInfo(long CommentId)
         {
 
             return 0;
         }
 
-        public List<CommentInfo> GetCommentList(int blogId)
+        public List<CommentInfo> GetCommentList(long blogId)
         {
-            return null;
+            var response = ESHelper.client.Search<CommentInfo>(s=>s.Query(q=>q.Term(t=>t.BlogId,blogId)).Sort(x=>x.Ascending(p=>p.CommentId)));
+            List<CommentInfo> list = null;
+            if (response.Documents.Count>0)
+            {
+                foreach (CommentInfo document in response.Documents)
+                    list.Add(document);
+            }
+            return list;
         }
 
         public void LoadEntity(DataRow row, CommentInfo commentInfo)

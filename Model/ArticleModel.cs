@@ -16,7 +16,7 @@ namespace Model
             for (int i = 0; i < 10; i++)
             {
                 article = new ArticleEntity();
-                article.ID = i;
+                article.BlogId = i;
                 article.Title = string.Format("第{0}篇测试文章-标题加长加长再加长",i);
                 article.Content = string.Format("第{0}篇测试文章--正文部分，内容页面内容页面",i);
                 article.PostUser = "zhanggang" + i.ToString();

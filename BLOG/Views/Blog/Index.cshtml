@@ -17,7 +17,7 @@
             }
             $("#form1").ajaxSubmit({
                 type: "post",
-                url: "~/Blog/CommentAdd",
+                url: "/Blog/CommentAdd",
                 success: function (data) {
                     var serverData = data.split(':');
                     if (serverData[0] == "ok") {
@@ -31,7 +31,7 @@
                 error: function (data) {
                     alert(data);
                 }
-            });//jquery.form.js --myajaxform.js
+            });//jquery.form.js -->myajaxform.js
         });
     }
     function commantDellClick() {
@@ -72,7 +72,7 @@
     <p>发布于：@blog.CreatedTime.ToLongDateString()</p>
     if(Session["user"] != null)
     {
-        <p><a class="btn btn-default" href="~/Admin/EditBlog?Id=@blog.Id">修改 &raquo;</a><a class="btn btn-default" href="~/Admin/DeleteBlog?Id=@blog.Id">删除 &raquo;</a></p>
+        <p><a class="btn btn-default" href="~/Admin/EditBlog?Id=@blog.BlogId">修改 &raquo;</a><a class="btn btn-default" href="~/Admin/DeleteBlog?Id=@blog.BlogId">删除 &raquo;</a></p>
     }
 
     if (ViewData["listComment"] != null)
@@ -83,7 +83,7 @@
             <p>@commentInfo.UserName： @commentInfo.Comment 时间：@commentInfo.CreatedTime.ToShortDateString() 
             @if (Session["user"] != null)
             {
-                <a name="ayibu" title="@commentInfo.Id.ToString()" href="~/Admin/DeleteComment?CommentId=@commentInfo.Id">[删除]</a>
+                <a name="ayibu" title="@commentInfo.CommentId.ToString()" href="~/Admin/DeleteComment?CommentId=@commentInfo.CommentId">[删除]</a>
                 @*<span name="ayibu" title="~/Admin/DeleteComment?CommentId=@commentInfo.Id">[删除]</span>*@
             } </p> @*a标签实现异步*@
         }
@@ -109,7 +109,7 @@
             <label for="lableforcommont">留言</label>
             <textarea class="form-control" id="mycontent" rows="6" name="Comment" placeholder="请您留言..."></textarea>
         </div>
-        <input type="hidden" name="BlogId" id="BlogId" value="@blog.Id" />
+        <input type="hidden" name="BlogId" id="BlogId" value="@blog.BlogId" />
         @*<button type="submit" name="commentAdd" id="commentAddbtn" class="btn btn-default">提交</button>  草:实现异步,类型不用是submit!*@
         <button type="button" name="commentAdd" id="commentAddbtn" class="btn btn-default">提交</button>
     }

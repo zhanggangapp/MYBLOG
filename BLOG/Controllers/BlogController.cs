@@ -15,7 +15,7 @@ namespace BLOG.Controllers
         // GET: Blog
         public ActionResult Index()
         {
-            int BlogId =Convert.ToInt32(Request["blogId"]);
+            long BlogId =Convert.ToInt64(Request["blogId"]);
             BlogInfo blog = new BlogInfo();
             blog = blogService.GetBlogById(BlogId);
             ViewData["blog"] = blog;
@@ -27,7 +27,7 @@ namespace BLOG.Controllers
         }
         public ActionResult CommentAdd()
         {
-            int BlogId = Convert.ToInt32(Request["BlogId"]);
+            long BlogId = Convert.ToInt64(Request["BlogId"]);
             if (Request.IsPostBack())
             {
                 string userName = Request["UserName"];

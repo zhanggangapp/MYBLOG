@@ -15,7 +15,7 @@ namespace DAL
     {
         public List<BlogInfo> GetBlogListByPage(int start, int end)
         {
-            string sql = "SELECT * FROM ( SELECT ROW_NUMBER() OVER (ORDER BY id DESC ) AS num,Id,Title,dbo.GetSubstring(Content,400) as Content,CreatedTime FROM dbo.BlogInfo ) AS t WHERE t.num>=@start AND t.num<=@end";
+            string sql = "SELECT * FROM ( SELECT ROW_NUMBER() OVER (ORDER BY BlogId DESC ) AS num,BlogId,Title,dbo.GetSubstring(Content,400) as Content,CreatedTime FROM dbo.BlogInfo ) AS t WHERE t.num>=@start AND t.num<=@end";
             SqlParameter[] pars = {
                 //new SqlParameter("@start",start),
                 //new SqlParameter("@end",end)
@@ -41,7 +41,7 @@ namespace DAL
         }
         public List<BlogInfo> GetBlogTitleListByPage(int start, int end)
         {
-            string sql = "SELECT Id, Title,CreatedTime FROM ( SELECT ROW_NUMBER() OVER (ORDER BY id DESC ) AS num, Id,Title,CreatedTime FROM dbo.BlogInfo ) AS t WHERE t.num>=@start AND t.num<=@end";
+            string sql = "SELECT BlogId, Title,CreatedTime FROM ( SELECT ROW_NUMBER() OVER (ORDER BY BlogId DESC ) AS num, BlogId,Title,CreatedTime FROM dbo.BlogInfo ) AS t WHERE t.num>=@start AND t.num<=@end";
             SqlParameter[] pars = {
                 //new SqlParameter("@start",start),
                 //new SqlParameter("@end",end)
@@ -68,7 +68,7 @@ namespace DAL
 
         public List<BlogInfo> GetBlogTitleListByKeyWordPage(int start, int end,string keyword)
         {
-            string sql = "SELECT Id, Title,CreatedTime FROM ( SELECT ROW_NUMBER() OVER (ORDER BY id DESC ) AS num, Id,Title,CreatedTime FROM dbo.BlogInfo where Title like @Title ) AS t WHERE t.num>=@start AND t.num<=@end";
+            string sql = "SELECT BlogId, Title,CreatedTime FROM ( SELECT ROW_NUMBER() OVER (ORDER BY BlogId DESC ) AS num, BlogId,Title,CreatedTime FROM dbo.BlogInfo where Title like @Title ) AS t WHERE t.num>=@start AND t.num<=@end";
             SqlParameter[] pars = {
                 //new SqlParameter("@start",start),
                 //new SqlParameter("@end",end)
@@ -108,15 +108,15 @@ namespace DAL
             return Convert.ToInt32(SqlHelper.ExecuteScalar(sql,CommandType.Text,pars));
         }
         
-        public BlogInfo GetBlogById(int id)
+        public BlogInfo GetBlogById(long id)
         {
-            string sql = "SELECT * FROM dbo.BlogInfo WHERE Id=@Id";
+            string sql = "SELECT * FROM dbo.BlogInfo WHERE BlogId=@Id";
             SqlParameter[] pars = { new SqlParameter("@Id", id) };
             SqlDataReader dr = SqlHelper.ExecuteReader(sql, CommandType.Text, pars);
             BlogInfo blogInfo = new BlogInfo();
             if (dr.HasRows && dr.Read())
             {
-                blogInfo.Id = id;
+                blogInfo.BlogId = id;
                 blogInfo.Title = dr["Title"].ToString();
                 blogInfo.Content = dr["Content"].ToString();
                 blogInfo.CreatedTime = Convert.ToDateTime(dr["CreatedTime"]);
@@ -134,20 +134,20 @@ namespace DAL
             int result = SqlHelper.ExecuteNonQuery(sql, CommandType.Text, pars);
             return result;
         }
-        public int EditBlogInfo(int blogid,string title, string content)
+        public int EditBlogInfo(long blogid,string title, string content)
         {
-            string sql = "UPDATE dbo.BlogInfo SET Title=@title,Content=@content WHERE id =@id";
-            SqlParameter[] pars = { new SqlParameter("@title", SqlDbType.NVarChar), new SqlParameter("@content", SqlDbType.NVarChar),new SqlParameter("@id",SqlDbType.Int) };
+            string sql = "UPDATE dbo.BlogInfo SET Title=@title,Content=@content WHERE BlogId =@id";
+            SqlParameter[] pars = { new SqlParameter("@title", SqlDbType.NVarChar), new SqlParameter("@content", SqlDbType.NVarChar),new SqlParameter("@id",SqlDbType.BigInt) };
             pars[0].Value = title;
             pars[1].Value = content;
             pars[2].Value = blogid;
             int result = SqlHelper.ExecuteNonQuery(sql, CommandType.Text, pars);
             return result;
         }
-        public int DeleteBlogInfo(int blogid)
+        public int DeleteBlogInfo(long blogid)
         {
-            string sql = "delete dbo.CommentInfo where BlogId=@id;delete dbo.BlogInfo WHERE id =@id";
-            SqlParameter[] pars = { new SqlParameter("@id", SqlDbType.Int) };
+            string sql = "delete dbo.CommentInfo where BlogId=@id;delete dbo.BlogInfo WHERE BlogId =@id";
+            SqlParameter[] pars = { new SqlParameter("@id", SqlDbType.BigInt) };
             pars[0].Value = blogid;
             int result = SqlHelper.ExecuteNonQuery(sql, CommandType.Text, pars);
             return result;
@@ -155,7 +155,7 @@ namespace DAL
 
         public void LoadEntity(DataRow row, BlogInfo blogInfo)
         {
-            blogInfo.Id = Convert.ToInt32(row["Id"]);
+            blogInfo.BlogId = Convert.ToInt64(row["Id"]);
             blogInfo.Title = row["Title"] != DBNull.Value ? row["Title"].ToString() : string.Empty;
             //首页只显示第一个<p></p>内容即可. 匹配经常失败,由于<p class="..不能匹配.
             //Regex re = new Regex("<p>(?<content>[\\w\\W]*?)</p>");
@@ -171,9 +171,14 @@ namespace DAL
         }
         public void LoadTitleEntity(DataRow row, BlogInfo blogInfo)
         {
-            blogInfo.Id = Convert.ToInt32(row["Id"]);
+            blogInfo.BlogId = Convert.ToInt64(row["Id"]);
             blogInfo.Title = row["Title"] != DBNull.Value ? row["Title"].ToString() : string.Empty;
             blogInfo.CreatedTime = Convert.ToDateTime(row["CreatedTime"]);
+        }
+
+        public int EditBlogInfo(int blogid, string title, string content)
+        {
+            throw new NotImplementedException();
         }
     }
 }

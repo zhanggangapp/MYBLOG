@@ -15,10 +15,10 @@ namespace DAL
         List<BlogInfo> GetBlogTitleListByKeyWordPage(int start, int end, string keyword);
         int GetBlogCount();
         int GetBlogListByKeyWordCount(string keyword);
-        BlogInfo GetBlogById(int id);
+        BlogInfo GetBlogById(long blogid);
         int AddBlogInfo(string title, string content);
-        int EditBlogInfo(int blogid, string title, string content);
-        int DeleteBlogInfo(int blogid);
+        int EditBlogInfo(long blogid, string title, string content);
+        int DeleteBlogInfo(long blogid);
         void LoadTitleEntity(DataRow row, BlogInfo blogInfo);
     }
 }

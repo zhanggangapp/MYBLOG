@@ -14,11 +14,17 @@ namespace ConsoleTest
         static void Main(string[] args)
         {
 
-            Utility.ESHelper.CreateIndex("myblog");
+            //Utility.ESHelper.CreateIndex("myblog");
 
             BlogInfoESDal bied = new BlogInfoESDal();
             CommentInfoESDal cied = new CommentInfoESDal();
 
+            //var response = ESHelper.client.Search<BlogInfo>(s => s.Query(q => q.MatchAll()).From(0).Size(3));
+              var response = ESHelper.client.Search<BlogInfo>(s => s.Query(q => q.MatchAll()).From(0).Size(2));
+            foreach (BlogInfo item in response.Documents)
+            {
+                long a = item.BlogId;
+            }
             //根据id获取一个Blog
             //BlogInfo blog = bied.GetBlogById(2);
             //测试添加一个索引

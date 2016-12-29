@@ -18,8 +18,12 @@ namespace BLOG.Controllers
             //使用es存储时,先不用登陆.todo
             if (Convert.ToInt32(HttpContext.Application["DataType"])==2)
             {
-                Session["user"] = "zhanggang@outlook.com";
-                return RedirectToAction("Index", "Home");
+                string AdminPwd = System.Configuration.ConfigurationManager.AppSettings["Admin"];
+                if(AdminPwd=="Admin123456")
+                {
+                    Session["user"] = "zhanggang@outlook.com";
+                    return RedirectToAction("Index", "Home");
+                }
             }
 
 

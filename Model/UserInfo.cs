@@ -7,11 +7,11 @@ using Nest;
 
 namespace Model
 {
-    [ElasticsearchType(IdProperty ="Id",Name ="userinfo")]
+    [ElasticsearchType(IdProperty ="UserId",Name ="userinfo")]
    public class UserInfo
     {
         [Number(NumberType.Integer)]
-        public long Id { get; set; }
+        public long UserId { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
     }

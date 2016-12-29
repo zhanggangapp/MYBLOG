@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Model;
 using Utility;
+using System.Text.RegularExpressions;
+
 namespace DAL
 {
     public class BlogInfoESDal : IBlogInfoDal
@@ -14,7 +16,7 @@ namespace DAL
         {
             var bloginfo = new BlogInfo
             {
-                Id= Convert.ToInt64(System.DateTime.Now.ToString("yyyyMMddhhmmssffff")),
+                BlogId = Convert.ToInt64(System.DateTime.Now.ToString("yyyyMMddhhmmssffff")),
                 Title=title,
                 Content=content,
                 CreatedTime=System.DateTime.Now
@@ -26,31 +28,28 @@ namespace DAL
             return 0;
         }
 
-        public int DeleteBlogInfo(int blogid)
-        {
-            throw new NotImplementedException();
-        }
-
         public int DeleteBlogInfo(long blogid)
         {
             var response = ESHelper.client.Delete<BlogInfo>(blogid);
             return 0;
         }
 
-        public int EditBlogInfo(int blogid, string title, string content)
+        public int EditBlogInfo(long blogid, string title, string content)
         {
             return 0;
         }
 
-        public BlogInfo GetBlogById(int id)
+        public BlogInfo GetBlogById(long id)
         {
-            var response = ESHelper.client.Get<BlogInfo>(2, idx => idx.Index("myblog"));
-            var bloginfo = response.Source;
+            //var response = ESHelper.client.Get<BlogInfo>(Id, idx => idx.Index("myblog"));
+            var response = ESHelper.client.Search<BlogInfo>(s => s.Query(q=>q.Term(p=>p.BlogId, id)));
+            var bloginfo = response.Documents.First();
+            
             return new BlogInfo()
             {
-                Id = bloginfo.Id,
+                BlogId = bloginfo.BlogId,
                 Title = bloginfo.Title,
-                Content = bloginfo.Title,
+                Content = bloginfo.Content,
                 CreatedTime = bloginfo.CreatedTime
             };
         }
@@ -68,13 +67,17 @@ namespace DAL
         public List<BlogInfo> GetBlogListByPage(int start, int end)
         {
             //var response = ESHelper.client.Search<BlogInfo>(s => s.From(start).Size(end-start).Query(q=>q.Term(t=>t.Title,"博客")).Sort(x=>x.Field("Id",Nest.SortOrder.Descending)));
-            var response = ESHelper.client.Search<BlogInfo>(s => s.Query(q => q.MatchAll()).From(start-1).Size(end-start));
+            var response = ESHelper.client.Search<BlogInfo>(s => s.Query(q => q.MatchAll()).From(start-1).Size(end-start).Sort(ss=>ss.Descending(p=>p.BlogId)));
             List<BlogInfo> list = null;
             if (response.Documents.Count>0)
             {
                 list = new List<BlogInfo>();
+                Regex re = new Regex(@"<p[\w\W]*?>(?<content>[\w\W]*?)</p>");
                 foreach (BlogInfo document in response.Documents)
                 {
+                    Match m = re.Match(document.Content);
+                    if (m.Success)
+                        document.Content = m.Groups["content"].Value;
                     list.Add(document);
                 }
             }

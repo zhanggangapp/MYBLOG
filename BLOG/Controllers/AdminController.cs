@@ -18,7 +18,7 @@ namespace BLOG.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            int Id = Convert.ToInt32(Request["Id"]);
+            long Id = Convert.ToInt64(Request["Id"]);
             string Title = Request["Title"];
             string Context = Request["Content"];
             return View();
@@ -57,7 +57,7 @@ namespace BLOG.Controllers
         [ValidateInput(false)]
         public ActionResult EditBlog()
         {
-            int BlogId = Convert.ToInt32(Request["Id"]);
+            long BlogId = Convert.ToInt64(Request["Id"]);
             if (Request.IsPostBack())
             {
                 string title = Request["Title"];
