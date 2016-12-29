@@ -68,16 +68,14 @@ namespace DAL
         public List<BlogInfo> GetBlogListByPage(int start, int end)
         {
             //var response = ESHelper.client.Search<BlogInfo>(s => s.From(start).Size(end-start).Query(q=>q.Term(t=>t.Title,"博客")).Sort(x=>x.Field("Id",Nest.SortOrder.Descending)));
-            var response = ESHelper.client.Search<BlogInfo>(s => s.Query(q => q.MatchAll()).Size(10));
+            var response = ESHelper.client.Search<BlogInfo>(s => s.Query(q => q.MatchAll()).From(start-1).Size(end-start));
             List<BlogInfo> list = null;
             if (response.Documents.Count>0)
             {
                 list = new List<BlogInfo>();
-                BlogInfo blogInfo = null;
                 foreach (BlogInfo document in response.Documents)
                 {
-                    blogInfo = new BlogInfo();
-                    list.Add(blogInfo);
+                    list.Add(document);
                 }
             }
             return list;
