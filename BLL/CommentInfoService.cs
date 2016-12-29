@@ -9,7 +9,7 @@ namespace BLL
 {
    public class CommentInfoService
     {
-        DAL.CommentInfoDal commentInfoDal = new CommentInfoDal();
+        DAL.CommentInfoSQLDal commentInfoDal = new CommentInfoSQLDal();
         public bool AddComment(int blogId,string userName,string comment)
         {
             if (blogId==0 || string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(comment))

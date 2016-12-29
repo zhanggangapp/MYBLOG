@@ -4,13 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
-
+using Utility;
+using DAL;
+using Model;
 namespace ConsoleTest
 {
     public class Program
     {
         static void Main(string[] args)
         {
+
+            Utility.ESHelper.CreateIndex("myblog");
+
+            BlogInfoESDal bied = new BlogInfoESDal();
+            CommentInfoESDal cied = new CommentInfoESDal();
+
+            //根据id获取一个Blog
+            //BlogInfo blog = bied.GetBlogById(2);
+            //测试添加一个索引
+          
+            //测试添加一个评论文档
+            int ao = cied.AddCommentInfo(3, "张刚77", "这是我的一条留言");
+
+            //测试添加一个博客文档
+           
+            int a1 = bied.AddBlogInfo("我的第4个ES博客", "博客内容4");
+
+
+
+            Console.ReadKey();
+            Console.WriteLine("BLOG测试结束");
+            Console.ReadKey();
+
+
             Console.WriteLine("string测试");
             ThreadTest t1 = new ThreadTest();
             ThreadTest tt1 = new ThreadTest();

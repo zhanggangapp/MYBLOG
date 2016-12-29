@@ -12,22 +12,18 @@ namespace DAL
     {
         public int AddBlogInfo(string title,string content)
         {
-            //string sql = "INSERT INTO dbo.BlogInfo( Title, Content) VALUES  ( @title,@content)";
-            //SqlParameter[] pars = { new SqlParameter("@title", SqlDbType.NVarChar), new SqlParameter("@content", SqlDbType.NVarChar) };
-            //pars[0].Value = title;
-            //    pars[1].Value = content;
-            //    int result = SqlHelper.ExecuteNonQuery(sql, CommandType.Text, pars);
-            //    return result;
             var bloginfo = new BlogInfo
             {
-                Id=1,
+                Id= Convert.ToInt64(System.DateTime.Now.ToString("yyyyMMddhhmmssffff")),
                 Title=title,
                 Content=content,
                 CreatedTime=System.DateTime.Now
             };
-            var response = ESHelperf.client.Index(bloginfo);
-
-            return 1;
+            //var response = ESHelper.client.Index(bloginfo,idx=>idx.Index("myblog"));
+            var response = ESHelper.client.Index(bloginfo);
+            if (response.Created == true)
+                return 1;
+            return 0;
         }
 
         public int DeleteBlogInfo(int blogid)
@@ -35,32 +31,56 @@ namespace DAL
             throw new NotImplementedException();
         }
 
+        public int DeleteBlogInfo(long blogid)
+        {
+            var response = ESHelper.client.Delete<BlogInfo>(blogid);
+            return 0;
+        }
+
         public int EditBlogInfo(int blogid, string title, string content)
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public BlogInfo GetBlogById(int id)
         {
-            throw new NotImplementedException();
+            var response = ESHelper.client.Get<BlogInfo>(2, idx => idx.Index("myblog"));
+            var bloginfo = response.Source;
+            return new BlogInfo()
+            {
+                Id = bloginfo.Id,
+                Title = bloginfo.Title,
+                Content = bloginfo.Title,
+                CreatedTime = bloginfo.CreatedTime
+            };
         }
 
         public int GetBlogCount()
         {
             return 1;
-            throw new NotImplementedException();
         }
 
         public int GetBlogListByKeyWordCount(string keyword)
         {
             return 1;
-            throw new NotImplementedException();
         }
 
         public List<BlogInfo> GetBlogListByPage(int start, int end)
         {
-            return null;
-            throw new NotImplementedException();
+            //var response = ESHelper.client.Search<BlogInfo>(s => s.From(start).Size(end-start).Query(q=>q.Term(t=>t.Title,"博客")).Sort(x=>x.Field("Id",Nest.SortOrder.Descending)));
+            var response = ESHelper.client.Search<BlogInfo>(s => s.Query(q => q.MatchAll()).Size(10));
+            List<BlogInfo> list = null;
+            if (response.Documents.Count>0)
+            {
+                list = new List<BlogInfo>();
+                BlogInfo blogInfo = null;
+                foreach (BlogInfo document in response.Documents)
+                {
+                    blogInfo = new BlogInfo();
+                    list.Add(blogInfo);
+                }
+            }
+            return list;
         }
 
         public List<BlogInfo> GetBlogTitleListByKeyWordPage(int start, int end, string keyword)
@@ -69,11 +89,6 @@ namespace DAL
         }
 
         public List<BlogInfo> GetBlogTitleListByPage(int start, int end)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LoadEntity(DataRow row, BlogInfo blogInfo)
         {
             throw new NotImplementedException();
         }

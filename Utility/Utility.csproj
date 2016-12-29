@@ -59,7 +59,7 @@
     <Compile Include="Converter.cs" />
     <Compile Include="ConverterAuto.cs" />
     <Compile Include="EncryptHelper.cs" />
-    <Compile Include="ESHelperf.cs" />
+    <Compile Include="ESHelper.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MailHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

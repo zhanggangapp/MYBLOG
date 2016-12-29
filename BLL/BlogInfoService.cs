@@ -33,7 +33,6 @@ namespace BLL
 
         public List<BlogInfo> GetBlogListByPag(int pageIndex,int pageSize)
         {
-            
             int start = (pageIndex - 1) * pageSize + 1;
             int end = pageIndex * pageSize;
             List<BlogInfo> list = blogInfoDal.GetBlogListByPage(start, end);
