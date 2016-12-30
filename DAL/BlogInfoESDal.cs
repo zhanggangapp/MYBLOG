@@ -14,7 +14,7 @@ namespace DAL
     {
         public int AddBlogInfo(string title,string content)
         {
-            long blogId = Convert.ToInt64(System.DateTime.Now.ToString("yyyyMMddhhmmssffff"));
+            long blogId = Convert.ToInt64(System.DateTime.Now.ToString("yyyyMMddhhmmss"));
             var bloginfo = new BlogInfo
             {
                 BlogId = blogId,

@@ -15,7 +15,7 @@ namespace DAL
 
             var commentinfo = new CommentInfo
             {
-                CommentId = Convert.ToInt64(System.DateTime.Now.ToString("yyyyMMddhhmmssffff")),
+                CommentId = Convert.ToInt64(System.DateTime.Now.ToString("yyyyMMddhhmmss")),
                 BlogId = blogId,
                 UserName = userName,
                 Comment = comment,
