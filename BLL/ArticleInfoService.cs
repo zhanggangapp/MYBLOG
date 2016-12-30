@@ -9,7 +9,7 @@ namespace BLL
 {
     public class ArticleInfoService
     {
-        DAL.ArticleInfoDal articleInfoDal = new ArticleInfoDal();
+        DAL.IArticleInfoDal articleInfoDal = new ArticleInfoSQLDal();
         public List<ArticleEntity> GetArticleList(DateTime beginTime)
         {
             List<ArticleEntity> list = articleInfoDal.GetArticleList(beginTime);

@@ -52,12 +52,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArticleInfoDal.cs" />
+    <Compile Include="ArticleInfoSQLDal.cs" />
+    <Compile Include="ArticleInfoESDal.cs" />
     <Compile Include="BlogInfoESDal.cs" />
     <Compile Include="BlogInfoSQLDal.cs" />
     <Compile Include="BlogInfoXMLDal.cs" />
     <Compile Include="CommentInfoESDal.cs" />
     <Compile Include="CommentInfoSQLDal.cs" />
+    <Compile Include="IArticleInfoDal.cs" />
     <Compile Include="IBlogInfoDal.cs" />
     <Compile Include="ICommentInfoDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
