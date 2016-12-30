@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using Nest;
 namespace Model
 {
-    [ElasticsearchType(Name ="bloginfo")]
+    [ElasticsearchType(IdProperty ="BlogId", Name ="bloginfo")]
     public class BlogInfo
     {
+        [Number(NumberType.Long)]
         public long BlogId { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }

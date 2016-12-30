@@ -14,13 +14,34 @@ namespace ConsoleTest
         static void Main(string[] args)
         {
 
-            //Utility.ESHelper.CreateIndex("myblog");
+            //Utility.ESHelper.CreateIndex("test");
+            //var info = ESHelper.client.Index("");
+
+
+
 
             BlogInfoESDal bied = new BlogInfoESDal();
             CommentInfoESDal cied = new CommentInfoESDal();
 
+            //int a1 = bied.AddBlogInfo("我的第4个ES博客", "博客内容4");
+
+
+
+           // long blogId = Convert.ToInt64(System.DateTime.Now.ToString("yyyyMMddhhmmssffff"));
+            long blogId = 1;
+            var bloginfo = new BlogInfo
+            {
+                BlogId = blogId,
+                Title = "标题1111",
+                Content = "内容1111",
+                CreatedTime = System.DateTime.Now
+            };
+            //var response = ESHelper.client.Index(bloginfo,idx=>idx.Index("myblog"));
+            var response1 = ESHelper.client.Index(bloginfo);
+
+
             //var response = ESHelper.client.Search<BlogInfo>(s => s.Query(q => q.MatchAll()).From(0).Size(3));
-              var response = ESHelper.client.Search<BlogInfo>(s => s.Query(q => q.MatchAll()).From(0).Size(2));
+            var response = ESHelper.client.Search<BlogInfo>(s => s.Query(q => q.MatchAll()).From(0).Size(20));
             foreach (BlogInfo item in response.Documents)
             {
                 long a = item.BlogId;

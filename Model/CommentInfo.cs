@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Nest;
 namespace Model
 {
-    //[ElasticsearchType(IdProperty ="CommentId",Name ="commentinfo")]  //这里的名字就是类型名字
+    [ElasticsearchType(IdProperty ="CommentId",Name ="commentinfo")]  //这里的名字就是类型名字
     public class CommentInfo
     {
         [Number(NumberType.Long)]

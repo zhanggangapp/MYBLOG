@@ -14,9 +14,10 @@ namespace DAL
     {
         public int AddBlogInfo(string title,string content)
         {
+            long blogId = Convert.ToInt64(System.DateTime.Now.ToString("yyyyMMddhhmmssffff"));
             var bloginfo = new BlogInfo
             {
-                BlogId = Convert.ToInt64(System.DateTime.Now.ToString("yyyyMMddhhmmssffff")),
+                BlogId = blogId,
                 Title=title,
                 Content=content,
                 CreatedTime=System.DateTime.Now
@@ -43,15 +44,16 @@ namespace DAL
         {
             //var response = ESHelper.client.Get<BlogInfo>(Id, idx => idx.Index("myblog"));
             var response = ESHelper.client.Search<BlogInfo>(s => s.Query(q=>q.Term(p=>p.BlogId, id)));
-            var bloginfo = response.Documents.First();
-            
-            return new BlogInfo()
-            {
-                BlogId = bloginfo.BlogId,
-                Title = bloginfo.Title,
-                Content = bloginfo.Content,
-                CreatedTime = bloginfo.CreatedTime
-            };
+            return response.Documents.First();
+
+            //var bloginfo = response.Documents.First();
+            //return new BlogInfo()
+            //{
+            //    BlogId = bloginfo.BlogId,
+            //    Title = bloginfo.Title,
+            //    Content = bloginfo.Content,
+            //    CreatedTime = bloginfo.CreatedTime
+            //};
         }
 
         public int GetBlogCount()

@@ -16,7 +16,7 @@ namespace Utility
             var settings = new ConnectionSettings(node);
             settings.DefaultIndex("myblog");
             client = new ElasticClient(settings);
-           // CreateIndex("BlogInfo");
+            //CreateIndex("myblog");
         }
         
         //通用的根据实体添加,需要根据属性值 来一一匹配添加 
