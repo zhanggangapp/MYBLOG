@@ -34,13 +34,13 @@ namespace Utility
         private readonly static bool SmtpEnableSsl = false;
         private readonly static string SmtpUsername = "175582488@qq.com";
         private readonly static string SmtpDisplayName = "测试邮箱1111";
-        private readonly static string SmtpPassword = "zlwwlz8451";
+        private readonly static string SmtpPassword = "xxx";
 
         /// <summary>
         /// 发送邮件到指定收件人
         /// </summary>
         /// <remarks>
-        ///  2013-11-18 18:55 Created By iceStone
+        ///  2013-11-18 18:55 Crea
         /// </remarks>
         /// <param name="to">收件人地址</param>
         /// <param name="subject">主题</param>
