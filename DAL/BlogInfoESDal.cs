@@ -32,11 +32,24 @@ namespace DAL
         public int DeleteBlogInfo(long blogid)
         {
             var response = ESHelper.client.Delete<BlogInfo>(blogid);
+            if (response.Result == Nest.Result.Deleted)
+                return 1;
             return 0;
         }
 
         public int EditBlogInfo(long blogid, string title, string content)
         {
+            var bloginfo = new BlogInfo
+            {
+                BlogId = blogid,
+                Title = title,
+                Content = content,
+                CreatedTime = System.DateTime.Now
+            };
+
+            var response = ESHelper.client.Index(bloginfo);
+            if (response.Result == Nest.Result.Updated)
+                return 1;            
             return 0;
         }
 
@@ -58,7 +71,8 @@ namespace DAL
 
         public int GetBlogCount()
         {
-            return 1;
+            var response = ESHelper.client.Count<BlogInfo>(c => c.Query(q=>q.MatchAll()));
+            return Convert.ToInt32(response.Count);
         }
 
         public int GetBlogListByKeyWordCount(string keyword)
@@ -88,17 +102,33 @@ namespace DAL
 
         public List<BlogInfo> GetBlogTitleListByKeyWordPage(int start, int end, string keyword)
         {
-            throw new NotImplementedException();
+            var key = string.Format("*{0}*",keyword);
+            var response = ESHelper.client.Search<BlogInfo>(s=>s.Query(q=>q.QueryString(t=>t.Query(key).DefaultOperator(Nest.Operator.Or))).From(start-1).Size(end-start).Sort(ss=>ss.Descending(pp=>pp.BlogId)));
+            List<BlogInfo> list = null;
+            if (response.Documents.Count>0)
+            {
+                list = new List<BlogInfo>();
+                foreach (BlogInfo documnet in response.Documents)
+                {
+                    list.Add(documnet);
+                }
+                return list;
+            }
+            return list;
         }
 
         public List<BlogInfo> GetBlogTitleListByPage(int start, int end)
         {
-            throw new NotImplementedException();
-        }
-
-        public void LoadTitleEntity(DataRow row, BlogInfo blogInfo)
-        {
-            throw new NotImplementedException();
+            var response = ESHelper.client.Search<BlogInfo>(s=>s.Query(q=>q.MatchAll()).From(start-1).Size(end-start).Sort(ss=>ss.Descending(p=>p.BlogId)));
+            //todo:仅仅返回blodid\title\creattime(无content)时,如何写?  
+            List<BlogInfo> list = null;
+            if (response.Documents.Count>0)
+            {
+                list = new List<BlogInfo>();
+                foreach (BlogInfo document in response.Documents)
+                    list.Add(document);
+            }
+            return list;
         }
     }
 }

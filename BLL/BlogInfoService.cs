@@ -86,7 +86,7 @@ namespace BLL
             }
             return blogInfoDal.EditBlogInfo(blogid,title, content) > 0;
         }
-        public bool DeletBlogInfo(int blogid)
+        public bool DeletBlogInfo(long blogid)
         {
             if (blogid == 0)
             {

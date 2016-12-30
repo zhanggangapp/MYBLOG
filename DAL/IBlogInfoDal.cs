@@ -19,6 +19,5 @@ namespace DAL
         int AddBlogInfo(string title, string content);
         int EditBlogInfo(long blogid, string title, string content);
         int DeleteBlogInfo(long blogid);
-        void LoadTitleEntity(DataRow row, BlogInfo blogInfo);
     }
 }

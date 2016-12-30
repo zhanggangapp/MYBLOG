@@ -79,7 +79,7 @@ namespace BLOG.Controllers
         }
         public ActionResult DeleteComment()
         {
-            int CommentId = Convert.ToInt32(Request["CommentId"]);
+            long CommentId = Convert.ToInt64(Request["CommentId"]);
             if (commentService.DeletCommentInfo(CommentId))
                 return Content("ok:删除成功");
             else
@@ -87,7 +87,7 @@ namespace BLOG.Controllers
         }
         public ActionResult DeleteBlog()
         {
-            int BlogId = Convert.ToInt32(Request["Id"]);
+            long BlogId = Convert.ToInt64(Request["Id"]);
 
             if (blogService.DeletBlogInfo(BlogId))
             {

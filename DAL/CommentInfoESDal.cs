@@ -30,16 +30,19 @@ namespace DAL
 
         public int DeleteCommentInfo(long CommentId)
         {
-
+            var response = ESHelper.client.Delete<CommentInfo>(CommentId);
+            if (response.Result == Nest.Result.Deleted)
+                return 1;
             return 0;
         }
 
         public List<CommentInfo> GetCommentList(long blogId)
         {
-            var response = ESHelper.client.Search<CommentInfo>(s=>s.Query(q=>q.Term(t=>t.BlogId,blogId)).Sort(x=>x.Ascending(p=>p.CommentId)));
+            var response = ESHelper.client.Search<CommentInfo>(s => s.Query(q => q.Term(t => t.BlogId, blogId)).Sort(x => x.Ascending(p => p.CommentId)));
             List<CommentInfo> list = null;
-            if (response.Documents.Count>0)
+            if (response.Documents.Count > 0)
             {
+                list = new List<CommentInfo>();
                 foreach (CommentInfo document in response.Documents)
                     list.Add(document);
             }
