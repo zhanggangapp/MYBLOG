@@ -15,17 +15,7 @@ namespace BLOG.Controllers
         public ActionResult Index()
         {
 
-            //使用es存储时,先不用登陆.todo
-            if (Convert.ToInt32(HttpContext.Application["DataType"])==2)
-            {
-                string AdminPwd = System.Configuration.ConfigurationManager.AppSettings["Admin"];
-                if(AdminPwd=="Admin123456")
-                {
-                    Session["user"] = "zhanggang@outlook.com";
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
+            
 
             //if (Request.HttpMethod.Equals("post",StringComparison.InvariantCultureIgnoreCase))
             //{
@@ -53,6 +43,21 @@ namespace BLOG.Controllers
                 string email = Request["Email"];
                 string password = Request["Password"];
                 string vcode = Request["Vcode"];
+
+                //使用es存储时,先不用登陆.todo
+                if (Convert.ToInt32(HttpContext.Application["DataType"]) == 2)
+                {
+                    string AdminPwd = System.Configuration.ConfigurationManager.AppSettings["Admin"];
+                    if (AdminPwd == password)
+                    {
+                        Session["user"] = "zhanggang@outlook.com";
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                return View();
+
+
+
                 if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(vcode))
                 {
                     ViewData["result"] = "邮箱或密码或验证码未输入,或不正常,请重新输入";
@@ -74,6 +79,10 @@ namespace BLOG.Controllers
                 }
                 else
                 {
+
+                    
+
+
                     // return RedirectToAction("Index","Admin");
                     Session["user"] = email;
                     //todo:zhanggang:这里返回地址后面再搞.应该反回登陆前访问的地址
