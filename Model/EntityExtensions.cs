@@ -14,18 +14,18 @@ namespace Model
             
             RSSEntity rss = new RSSEntity()
             {
-                Title = "张刚的rss test",
+                Title = "ZBHBLog RSS",
                 Copyright = "Copyright 2016",
-                Generator = "http://zhanggang.com.cn",
-                Link = "http://zhanggang.com.cn",
-                Description = "张刚的测试内容",
+                Generator = "http://u9.yonyou.com:90",
+                Link = "http://u9.yonyou.com:90",
+                Description = "RSS",
                 WebMaster = "zhanggang",
                 Image = new RSSImage()
                 {
                     Link="http://zhangang/image/logo.jpg",
-                    Title= "张刚的rss test",
-                    Url= "http://zhanggang.com.cn",
-                    Description= "张刚的测试内容img"
+                    Title= "ZBHBLog RSS",
+                    Url= "http://u9.yonyou.com:90",
+                    Description= "RSS"
                 }
             };
             if (articleList == null)
@@ -37,8 +37,8 @@ namespace Model
                     Title = article.Title,
                     Author = article.PostUser,
                     Category = "默认分类",
-                    Link = "http://www.zhang.com.cn",
-                    Guid = "http://www.zgang",
+                    Link = "http://u9.yonyou.com:90//Blog?blogId="+article.BlogId,
+                    Guid = "",
                     PubDate=article.PostTime,
                     Description=article.Content
                 });
