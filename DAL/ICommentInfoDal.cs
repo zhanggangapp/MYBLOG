@@ -10,8 +10,8 @@ namespace DAL
 {
     public interface ICommentInfoDal
     {
+        List<CommentInfo> GetCommentListByPage(int start, int end);
         List<CommentInfo> GetCommentList(long blogId);
-        void LoadEntity(DataRow row, CommentInfo commentInfo);
         int AddCommentInfo(long blogId, string userName, string comment);
         int DeleteCommentInfo(long CommentId);
         

@@ -48,9 +48,20 @@ namespace DAL
             }
             return list;
         }
-
-        public void LoadEntity(DataRow row, CommentInfo commentInfo)
+        public List<CommentInfo> GetCommentListByPage(int start, int end)
         {
+            //todo 混合查询,一块查出blog的title
+            var response = ESHelper.client.Search<CommentInfo>(s=>s.Query(q=>q.MatchAll()).From(start-1).Size(end-start).Sort(ss=>ss.Descending(p=>p.CommentId)));
+            List<CommentInfo> list = null;
+            if (response.Documents.Count>0)
+            {
+                list = new List<CommentInfo>();
+                foreach (CommentInfo document in response.Documents)
+                {
+                    list.Add(document);
+                }
+            }
+            return list;
         }
     }
 }

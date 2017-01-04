@@ -28,6 +28,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("目录", "List", "Home",new { area = "",id = "1" },new { @class = "navbar-brand", @style = "color:white" })</li>
+                    <li>@Html.ActionLink("评论", "List", "Home", new { area = "", id = "1" }, new { @class = "navbar-brand", @style = "color:white" })</li>
                     <li>@Html.ActionLink("写作", "Index", "Admin",null, new { @class = "navbar-brand", @style = "color:white" })</li>
                     @if (Session["user"] == null)
                     {

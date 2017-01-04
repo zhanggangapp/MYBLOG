@@ -384,6 +384,7 @@
     <Content Include="Views\Home\SearchList.cshtml" />
     <Content Include="Views\Admin\EditBlog.cshtml" />
     <Content Include="Views\Login\Test.cshtml" />
+    <Content Include="Views\Comment\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -395,7 +396,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Comment\" />
     <Folder Include="Views\RSS\" />
   </ItemGroup>
   <ItemGroup>

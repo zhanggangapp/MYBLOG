@@ -42,6 +42,11 @@ namespace BLL
             List<CommentInfo> list = commentInfoDal.GetCommentList(blogId);
             return list;
         }
+        public List<CommentInfo> GetCommentListByPage(int start,int end)
+        {
+            List<CommentInfo> list = commentInfoDal.GetCommentListByPage(start,end);
+            return list;
+        }
         public bool DeletCommentInfo(long Commentid)
         {
             if (Commentid == 0)

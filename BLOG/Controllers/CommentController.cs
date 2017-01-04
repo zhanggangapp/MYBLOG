@@ -12,6 +12,7 @@ namespace BLOG.Controllers
         // GET: Comment
         public ActionResult Index()
         {
+
             return View();
         }
 

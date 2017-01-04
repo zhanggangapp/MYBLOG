@@ -34,6 +34,24 @@ namespace DAL
             }
             return list;
         }
+        public List<CommentInfo> GetCommentListByPage(int start, int end)
+        {
+            string sql = "SELECT * FROM dbo.CommentInfo order by Commentid desc";
+            DataTable da = SqlHelper.ExecuteDataTable(sql, CommandType.Text,null);
+            List<CommentInfo> list = null;
+            if (da.Rows.Count > 0)
+            {
+                list = new List<CommentInfo>();
+                CommentInfo commentInfo = null;
+                foreach (DataRow row in da.Rows)
+                {
+                    commentInfo = new CommentInfo();
+                    LoadEntity(row, commentInfo);
+                    list.Add(commentInfo);
+                }
+            }
+            return list;
+        }
         private void LoadEntity(DataRow row,CommentInfo commentInfo)
         {
             commentInfo.CommentId = Convert.ToInt32(row["CommentId"]);
@@ -60,9 +78,5 @@ namespace DAL
             return result;
         }
 
-        void ICommentInfoDal.LoadEntity(DataRow row, CommentInfo commentInfo)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
