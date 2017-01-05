@@ -36,6 +36,12 @@ namespace DAL
             return 0;
         }
 
+        public int GetCommentCount()
+        {
+            var response = ESHelper.client.Count<CommentInfo>(c=>c.Query(q=>q.MatchAll()));
+            return Convert.ToInt32(response.Count);
+        }
+
         public List<CommentInfo> GetCommentList(long blogId)
         {
             var response = ESHelper.client.Search<CommentInfo>(s => s.Query(q => q.Term(t => t.BlogId, blogId)).Sort(x => x.Ascending(p => p.CommentId)));

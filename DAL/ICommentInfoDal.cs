@@ -14,6 +14,7 @@ namespace DAL
         List<CommentInfo> GetCommentList(long blogId);
         int AddCommentInfo(long blogId, string userName, string comment);
         int DeleteCommentInfo(long CommentId);
+        int GetCommentCount();
         
     }
 }

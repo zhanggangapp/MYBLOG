@@ -3,6 +3,66 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using Model;
+@using Common;
+<style>
+    .demo {
+        background-color:lightgray;
+        /*height: 40px;*/
+        position: relative;
+        width: 100%;
+        line-height:30px;
+    }
+
+        .demo:after {
+            content: '';
+            position: absolute;
+            /*height:20px;
+        width:20px;*/
+            //border:10px solid gray;
+            border: 10px solid transparent;
+            border-top-color: gray;
+            top: 100%;
+            left: 10px;
+        }
+
+    .demo2 {
+        margin-top: 10px;
+        background-color:aliceblue;
+        /*height: 30px;*/
+        line-height:30px;
+        position: relative;
+        /*width: 400px;*/
+    }
+</style>
 
 <h2>评论</h2>
+    
+
+
+<div class="row">
+    @if (ViewData["list"] != null)
+    {
+        foreach (CommentInfo commentInfo in (List<CommentInfo>)ViewData["list"])
+        {
+            <div class="demo col-md-12">@commentInfo.UserName：@commentInfo.Comment -- @commentInfo.CreatedTime.ToLongDateString()</div>
+            <div class="demo2 col-md-12">来自 [@commentInfo.UserName] 对博文 <a href="~/Blog/Index/@commentInfo.CommentId">博客文章标题</a> 的评论！ 
+    @if (Session["user"] != null)
+    {
+        <a style="color:red;" name="ayibu" title="@commentInfo.CommentId.ToString()" href="~/Admin/DeleteComment?CommentId=@commentInfo.CommentId">【删除此评论】</a>
+    }
+    </div>
+            <div class="col-md-12">
+                <p></p>
+            </div>
+        }
+        <div class="col-md-12">
+            <nav>
+                <ul class="pagination">
+                    @MvcHtmlString.Create(PageBar.GetPageBar((int)ViewData["pageIndex"], (int)ViewData["pageCount"]))
+                </ul>
+            </nav>
+        </div>
+    }
+</div>
 

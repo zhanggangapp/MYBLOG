@@ -34,6 +34,11 @@ namespace DAL
             }
             return list;
         }
+        public int GetCommentCount()
+        {
+            string sql = "SELECT count(*) FROM dbo.CommentInfo";
+            return Convert.ToInt32(SqlHelper.ExecuteScalar(sql, CommandType.Text));
+        }
         public List<CommentInfo> GetCommentListByPage(int start, int end)
         {
             string sql = "SELECT * FROM dbo.CommentInfo order by Commentid desc";

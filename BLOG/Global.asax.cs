@@ -26,7 +26,7 @@ namespace BLOG
             //target ~/Home/Index?PageIndex=1
 
             Regex regex3 = new Regex(@"Blog/Index/(\d+)");
-
+            Regex regex4 = new Regex(@"Comment/Index/(\d+)");
             Regex regex = new Regex(@"Index/(\d+)");
             Regex regex2 = new Regex(@"/List/(\d+)");
             Regex regex0 = new Regex(@"~/(\d+)");
@@ -52,6 +52,10 @@ namespace BLOG
                 //当前是伪静态格式
                 var realPath = regex2.Replace(exePath, @"/List?pageIndex=$1");
                 Context.RewritePath(realPath);
+            }
+            else if (regex4.IsMatch(exePath))
+            {
+                var realPath = regex4.Replace(exePath, @"Comment/Index?pageIndex=$1");
             }
             else if(regex1.IsMatch(exePath))
             {
