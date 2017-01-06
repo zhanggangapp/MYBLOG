@@ -54,20 +54,48 @@ namespace DAL
             }
             return list;
         }
-        public List<CommentInfo> GetCommentListByPage(int start, int end)
+        public List<BlogCommentInfo> GetCommentListByPage(int start, int end)
         {
-            //todo 混合查询,一块查出blog的title
-            var response = ESHelper.client.Search<CommentInfo>(s=>s.Query(q=>q.MatchAll()).From(start-1).Size(end-start).Sort(ss=>ss.Descending(p=>p.CommentId)));
-            List<CommentInfo> list = null;
+            //todo 混合查询,一块查出blog的title-- nested  has-child  has-parent似乎做不到.后续再研究.
+            //var response = ESHelper.client.Search<CommentInfo>(s=>s.Query(q=>q.MatchAll()).From(start-1).Size(end-start).Sort(ss=>ss.Descending(p=>p.CommentId)));
+            var response = ESHelper.client.Search<CommentInfo>(s => s.Query(q => q.MatchAll()).From(start - 1).Size(end - start).Sort(ss => ss.Descending(p => p.CommentId)));
+
+            List<BlogCommentInfo> list = null;
             if (response.Documents.Count>0)
             {
-                list = new List<CommentInfo>();
+                list = new List<BlogCommentInfo>();
+                BlogCommentInfo bcinfo = new BlogCommentInfo();
                 foreach (CommentInfo document in response.Documents)
                 {
-                    list.Add(document);
+                    bcinfo.BlogId = document.BlogId;
+                    bcinfo.Comment = document.Comment;
+                    bcinfo.CommentId = document.CommentId;
+                    bcinfo.CreatedTime = document.CreatedTime;
+                    //再查一次博客标题
+                    bcinfo.Title = GetBlogTitleById(document.BlogId);
+                    list.Add(bcinfo);
                 }
             }
             return list;
         }
+
+        public string GetBlogTitleById(long id)
+        {
+            //var response = ESHelper.client.Search<BlogInfo>(s => s.Query(q => q.Term(p => p.BlogId, id)));
+            var response = ESHelper.client.Search<BlogInfo>(s=>s.Query(q=>q.Term(p=>p.BlogId,id)).Source(ss=>ss.Includes(i=>i.Field(f=>f.Title))));
+            //return response.Documents.First();
+            if (response.Documents.Count>0)
+                return response.Documents.First().Title;
+            return "此博客已删除";
+            //var bloginfo = response.Documents.First();
+            //return new BlogInfo()
+            //{
+            //    BlogId = bloginfo.BlogId,
+            //    Title = bloginfo.Title,
+            //    Content = bloginfo.Content,
+            //    CreatedTime = bloginfo.CreatedTime
+            //};
+        }
+
     }
 }

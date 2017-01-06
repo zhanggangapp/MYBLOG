@@ -36,8 +36,10 @@
     }
     function commantDellClick() {
         $('a[name = "ayibu"]').click(function (e) {
+            e.preventDefault();//阻塞默认事件(a 不会在执行href事件了)
             var url = $(this).attr('href');
             //$(this).attr('href', '#');
+
             $(this).parent().remove();//直接删除掉其元素,这样就不存在a 再次执行一次get请求的问题了.
             //alert('bb');
             $.get(url, function (data) {
@@ -83,7 +85,7 @@
             <p>@commentInfo.UserName： @commentInfo.Comment 时间：@commentInfo.CreatedTime.ToShortDateString() 
             @if (Session["user"] != null)
             {
-                <a name="ayibu" title="@commentInfo.CommentId.ToString()" href="~/Admin/DeleteComment?CommentId=@commentInfo.CommentId">[删除]</a>
+                <a name="ayibu" title="@commentInfo.CommentId.ToString()" href="~/Admin/DeleteComment?CommentId=@commentInfo.CommentId">【删除】</a>
                 @*<span name="ayibu" title="~/Admin/DeleteComment?CommentId=@commentInfo.Id">[删除]</span>*@
             } </p> @*a标签实现异步*@
         }

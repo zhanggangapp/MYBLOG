@@ -39,31 +39,39 @@ namespace DAL
             string sql = "SELECT count(*) FROM dbo.CommentInfo";
             return Convert.ToInt32(SqlHelper.ExecuteScalar(sql, CommandType.Text));
         }
-        public List<CommentInfo> GetCommentListByPage(int start, int end)
-        {
-            string sql = "SELECT * FROM dbo.CommentInfo order by Commentid desc";
-            DataTable da = SqlHelper.ExecuteDataTable(sql, CommandType.Text,null);
-            List<CommentInfo> list = null;
-            if (da.Rows.Count > 0)
-            {
-                list = new List<CommentInfo>();
-                CommentInfo commentInfo = null;
-                foreach (DataRow row in da.Rows)
-                {
-                    commentInfo = new CommentInfo();
-                    LoadEntity(row, commentInfo);
-                    list.Add(commentInfo);
-                }
-            }
-            return list;
-        }
-        private void LoadEntity(DataRow row,CommentInfo commentInfo)
+        //public List<CommentInfo> GetCommentListByPage(int start, int end)
+        //{
+        //    string sql = "SELECT * FROM dbo.CommentInfo order by Commentid desc";
+        //    DataTable da = SqlHelper.ExecuteDataTable(sql, CommandType.Text,null);
+        //    List<CommentInfo> list = null;
+        //    if (da.Rows.Count > 0)
+        //    {
+        //        list = new List<CommentInfo>();
+        //        CommentInfo commentInfo = null;
+        //        foreach (DataRow row in da.Rows)
+        //        {
+        //            commentInfo = new CommentInfo();
+        //            LoadEntity(row, commentInfo);
+        //            list.Add(commentInfo);
+        //        }
+        //    }
+        //    return list;
+        //}
+        private void LoadEntity(DataRow row, CommentInfo commentInfo)
         {
             commentInfo.CommentId = Convert.ToInt32(row["CommentId"]);
             commentInfo.UserName = row["UserName"].ToString();
             commentInfo.Comment = row["Comment"].ToString();
             commentInfo.CreatedTime = Convert.ToDateTime(row["CreatedTime"]);
-        } 
+        }
+        private void LoadEntity(DataRow row, BlogCommentInfo commentInfo)
+        {
+            commentInfo.CommentId = Convert.ToInt32(row["CommentId"]);
+            commentInfo.UserName = row["UserName"].ToString();
+            commentInfo.Comment = row["Comment"].ToString();
+            commentInfo.CreatedTime = Convert.ToDateTime(row["CreatedTime"]);
+            commentInfo.Title = row["Title"].ToString();
+        }
         public int AddCommentInfo(long blogId,string userName, string comment)
         {
             string sql = "INSERT INTO dbo.CommentInfo(BlogId, UserName, Comment) VALUES  (@blogId,@userName,@comment)";
@@ -83,5 +91,23 @@ namespace DAL
             return result;
         }
 
+        List<BlogCommentInfo> ICommentInfoDal.GetCommentListByPage(int start, int end)
+        {
+            string sql = "SELECT c.*,b.Title FROM dbo.CommentInfo c,dbo.BlogInfo b where c.BlogId=b.BlogId order by Commentid desc";
+            DataTable da = SqlHelper.ExecuteDataTable(sql, CommandType.Text, null);
+            List<BlogCommentInfo> list = null;
+            if (da.Rows.Count > 0)
+            {
+                list = new List<BlogCommentInfo>();
+                BlogCommentInfo commentInfo = null;
+                foreach (DataRow row in da.Rows)
+                {
+                    commentInfo = new BlogCommentInfo();
+                    LoadEntity(row, commentInfo);
+                    list.Add(commentInfo);
+                }
+            }
+            return list;
+        }
     }
 }

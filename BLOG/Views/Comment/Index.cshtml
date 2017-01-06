@@ -28,34 +28,53 @@
 
     .demo2 {
         margin-top: 10px;
-        background-color:aliceblue;
+        /*background-color:aliceblue;*/
         /*height: 30px;*/
         line-height:30px;
         position: relative;
         /*width: 400px;*/
     }
 </style>
+<script src="~/Scripts/MyAjaxForm.js"></script>
+<script>
+    $(function () {
+        commandDelClick();
+    })
 
+    function commandDelClick() {
+        $('a[name = "ayibu"]').click(function (event) {
+            event.preventDefault();//阻塞默认事件(a 不会在执行href事件了)
+            var url = $(this).attr('href');
+            $(this).parent().parent().remove();
+            $.get(url, function (data) {
+                $('#dresult').css("display", "block");
+            });
+        });
+        return false;
+    }
+</script>
 <h2>评论</h2>
-    
-
-
 <div class="row">
     @if (ViewData["list"] != null)
     {
-        foreach (CommentInfo commentInfo in (List<CommentInfo>)ViewData["list"])
+        foreach (BlogCommentInfo commentInfo in (List<BlogCommentInfo>)ViewData["list"])
         {
-            <div class="demo col-md-12">@commentInfo.UserName：@commentInfo.Comment -- @commentInfo.CreatedTime.ToLongDateString()</div>
-            <div class="demo2 col-md-12">来自 [@commentInfo.UserName] 对博文 <a href="~/Blog/Index/@commentInfo.CommentId">博客文章标题</a> 的评论！ 
-    @if (Session["user"] != null)
-    {
-        <a style="color:red;" name="ayibu" title="@commentInfo.CommentId.ToString()" href="~/Admin/DeleteComment?CommentId=@commentInfo.CommentId">【删除此评论】</a>
-    }
-    </div>
-            <div class="col-md-12">
-                <p></p>
+            <div>
+                <p class="demo col-md-12">@commentInfo.UserName：@commentInfo.Comment -- @commentInfo.CreatedTime.ToLongDateString()</p>
+                <p class="demo2 col-md-12">
+                    来自 [@commentInfo.UserName] 对博文 <a href="~/Blog/Index/@commentInfo.BlogId">@commentInfo.Title</a> 的评论！
+                    @if (Session["user"] != null)
+                    {
+                        <a style="color:red;" name="ayibu" title="@commentInfo.CommentId.ToString()" href="~/Admin/DeleteComment?CommentId=@commentInfo.CommentId">【删除此评论】</a>
+                    }
+
+                </p>
             </div>
         }
+        <div id="dresult" class="alert alert-dismissable alert-warning" style="max-width:280px; display:none;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <i class="glyphicon glyphicon-warning-sign">删除评论成功</i>
+        </div>
         <div class="col-md-12">
             <nav>
                 <ul class="pagination">

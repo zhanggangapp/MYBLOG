@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="ArticleEntity.cs" />
     <Compile Include="ArticleModel.cs" />
+    <Compile Include="BlogCommentInfo.cs" />
     <Compile Include="BlogInfo.cs" />
     <Compile Include="CommentInfo.cs" />
     <Compile Include="EntityExtensions.cs" />

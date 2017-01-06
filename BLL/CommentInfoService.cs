@@ -48,13 +48,14 @@ namespace BLL
             int pageCount = Convert.ToInt32(Math.Ceiling((double)CommentCount / pageSize));
             return pageCount;
         }
-        public List<CommentInfo> GetCommentListByPage(int pageIndex,int pageSize)
+        public List<BlogCommentInfo> GetCommentListByPage(int pageIndex,int pageSize)
         {
             int start = (pageIndex - 1) * pageSize+1;
             int end = pageIndex * pageSize;
-            List<CommentInfo> list = commentInfoDal.GetCommentListByPage(start,end);
+            List<BlogCommentInfo> list = commentInfoDal.GetCommentListByPage(start,end);
             return list;
         }
+
         public bool DeletCommentInfo(long Commentid)
         {
             if (Commentid == 0)

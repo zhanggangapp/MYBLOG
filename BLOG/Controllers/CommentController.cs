@@ -18,7 +18,9 @@ namespace BLOG.Controllers
             int pageCount = commentInfoService.GetCommentCount(15);
             pageIndex = pageIndex < 1 ? 1 : pageIndex;
             pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
-            List<CommentInfo> list = commentInfoService.GetCommentListByPage(pageIndex, pageSize);
+            //List<CommentInfo> list = commentInfoService.GetCommentListByPage(pageIndex, pageSize);
+            List<BlogCommentInfo> list = commentInfoService.GetCommentListByPage(pageIndex, pageSize);
+            
             ViewData["list"] = list;
             ViewData["pageIndex"] = pageIndex;
             ViewData["pageCount"] = pageCount;
