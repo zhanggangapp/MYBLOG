@@ -64,19 +64,26 @@ namespace DAL
             if (response.Documents.Count>0)
             {
                 list = new List<BlogCommentInfo>();
-                BlogCommentInfo bcinfo = new BlogCommentInfo();
+                BlogCommentInfo bcinfo;
                 foreach (CommentInfo document in response.Documents)
                 {
-                    bcinfo.BlogId = document.BlogId;
-                    bcinfo.Comment = document.Comment;
-                    bcinfo.CommentId = document.CommentId;
-                    bcinfo.CreatedTime = document.CreatedTime;
-                    //再查一次博客标题
-                    bcinfo.Title = GetBlogTitleById(document.BlogId);
+                    bcinfo = new BlogCommentInfo();
+                    LoadEntity(document, bcinfo);
+                   
                     list.Add(bcinfo);
                 }
             }
             return list;
+        }
+        private void LoadEntity(CommentInfo document, BlogCommentInfo bcinfo)
+        {
+            bcinfo.BlogId = document.BlogId;
+            bcinfo.Comment = document.Comment;
+            bcinfo.CommentId = document.CommentId;
+            bcinfo.CreatedTime = document.CreatedTime;
+            bcinfo.UserName = document.UserName;
+            //再查一次博客标题
+            bcinfo.Title = GetBlogTitleById(document.BlogId);
         }
 
         public string GetBlogTitleById(long id)
