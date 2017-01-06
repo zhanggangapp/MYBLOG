@@ -31,6 +31,12 @@ namespace DAL
 
         public int DeleteBlogInfo(long blogid)
         {
+            //先删除掉博客的评论(集合）
+            //var response0 = ESHelper.client.Delete<CommentInfo>(d => d.BlogId(blogid));
+            //ESHelper.client.DeleteByQuery<CommentInfo>(dq => dq.Query(q => q.Term(tr => tr.Field(f => f.BlogId, blogid))));
+            ESHelper.client.DeleteByQuery<CommentInfo>(dq => dq.Query(q => q.Term(tr => tr.Field(f=>f.BlogId).Value(blogid))));
+
+
             var response = ESHelper.client.Delete<BlogInfo>(blogid);
             if (response.Result == Nest.Result.Deleted)
                 return 1;

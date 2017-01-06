@@ -90,18 +90,9 @@ namespace DAL
         {
             //var response = ESHelper.client.Search<BlogInfo>(s => s.Query(q => q.Term(p => p.BlogId, id)));
             var response = ESHelper.client.Search<BlogInfo>(s=>s.Query(q=>q.Term(p=>p.BlogId,id)).Source(ss=>ss.Includes(i=>i.Field(f=>f.Title))));
-            //return response.Documents.First();
             if (response.Documents.Count>0)
                 return response.Documents.First().Title;
             return "此博客已删除";
-            //var bloginfo = response.Documents.First();
-            //return new BlogInfo()
-            //{
-            //    BlogId = bloginfo.BlogId,
-            //    Title = bloginfo.Title,
-            //    Content = bloginfo.Content,
-            //    CreatedTime = bloginfo.CreatedTime
-            //};
         }
 
     }
