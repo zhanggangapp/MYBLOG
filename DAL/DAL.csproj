@@ -59,6 +59,7 @@
     <Compile Include="BlogInfoSQLDal.cs" />
     <Compile Include="BlogInfoXMLDal.cs" />
     <Compile Include="CommentInfoESDal.cs" />
+    <Compile Include="CommentInfoRedisDal.cs" />
     <Compile Include="CommentInfoSQLDal.cs" />
     <Compile Include="IArticleInfoDal.cs" />
     <Compile Include="IBlogInfoDal.cs" />
