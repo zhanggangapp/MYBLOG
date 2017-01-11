@@ -15,6 +15,7 @@ CREATE function [dbo].[regexReplace]
 @globalReplace bit = 0,   --是否是全局替换 
 @ignoreCase bit = 0       --是否忽略大小写 
 ) 
+
 returnS varchar(1000) AS 
 begin 
 declare @hr integer 

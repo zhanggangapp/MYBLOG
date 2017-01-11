@@ -110,7 +110,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="asp.net\bin\LitJSON.dll" />
+    <Content Include="asp.net\bin\LitJSON.DLL" />
     <Content Include="asp.net\demo.aspx" />
     <Content Include="asp.net\README.txt" />
     <Content Include="attached\file\20161227\20161227000045_2890.txt" />
@@ -334,6 +334,7 @@
     <Content Include="kindeditor\asp.net\upload_json.ashx" />
     <Content Include="asp.net\file_manager_json.ashx" />
     <Content Include="asp.net\upload_json.ashx" />
+    <None Include="Properties\PublishProfiles\22.pubxml" />
     <None Include="Properties\PublishProfiles\ZBHBlog.pubxml" />
     <None Include="Properties\PublishProfiles\ZBHBlogWork.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
