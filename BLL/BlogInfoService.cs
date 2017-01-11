@@ -15,19 +15,7 @@ namespace BLL
 
         public BlogInfoService()
         {
-           int DataType = Convert.ToInt32(HttpContext.Current.Application["DataType"]);
-            switch (DataType)
-            {
-                case 0:
-                    blogInfoDal = new BlogInfoSQLDal();
-                    break;
-                case 2:
-                    blogInfoDal = new BlogInfoESDal();
-                    break;
-                default:
-                    blogInfoDal = new BlogInfoSQLDal();
-                    break;
-            }
+            blogInfoDal = BlogInfoFactory.Create();
         }
 
         public List<BlogInfo> GetBlogListByPag(int pageIndex,int pageSize)
