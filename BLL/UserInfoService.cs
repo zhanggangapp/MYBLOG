@@ -14,5 +14,20 @@ namespace BLL
         {
             return userInfoDal.IsExist(email,password);
         }
+        //使用out参数将报错信息返回。
+        public bool IsExist(string email,string password,out string msg)
+        {
+            bool isOk = userInfoDal.IsExist(email, password);
+            if (isOk)
+            {
+                msg = "登陆成功";
+                return isOk;
+            }
+            else
+            {
+                msg = "登陆失败";
+                return false;
+            }
+        }
     }
 }

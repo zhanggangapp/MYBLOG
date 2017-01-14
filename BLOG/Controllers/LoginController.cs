@@ -15,9 +15,7 @@ namespace BLOG.Controllers
         public ActionResult Index()
         {
 
-            
-
-            //if (Request.HttpMethod.Equals("post",StringComparison.InvariantCultureIgnoreCase))
+            //if (Request.HttpMethod.Equals("post", StringComparison.InvariantCultureIgnoreCase))
             //{
             //    //回发回来的数据
             //    //var id = Request["Id"].ToInt32();--扩展方法 立方+向下箭头
@@ -34,8 +32,12 @@ namespace BLOG.Controllers
             //        {
             //            ViewData["result"] = "用户或密码错误,请重新输入";
             //        }
+            ////        string msg; //使用Out参数来返回登陆消息。
+            ////        userInfoService.IsExist(email, password, out msg);
+            ////        ViewData["result"] = msg;
             //    }
             //}
+
             if (Request.IsPostBack())//RequstHelper扩展方法
             {
                 //回发回来的数据

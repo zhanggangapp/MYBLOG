@@ -16,10 +16,17 @@ namespace ConsoleTest
 
             //Utility.ESHelper.CreateIndex("test");
             //var info = ESHelper.client.Index("");
+            Person p1 = new Person();
+            p1.Name = "zg";
+            p1.Age = 30;
+            Person p2 = new Person() { Name = "zt", Age = 22 };
+            Person p3 = p1;
 
+            //要比较两个对象是否为同一个对象时，使用object.ReferenceEquals（）方法。
+            Console.WriteLine(object.ReferenceEquals(p1, p2));//false
+            Console.WriteLine(object.ReferenceEquals(p1, p3));//true
 
-
-
+            Console.ReadKey();
             BlogInfoESDal bied = new BlogInfoESDal();
             CommentInfoESDal cied = new CommentInfoESDal();
 
@@ -27,7 +34,7 @@ namespace ConsoleTest
 
 
 
-           // long blogId = Convert.ToInt64(System.DateTime.Now.ToString("yyyyMMddhhmmssffff"));
+            // long blogId = Convert.ToInt64(System.DateTime.Now.ToString("yyyyMMddhhmmssffff"));
             long blogId = 1;
             var bloginfo = new BlogInfo
             {
@@ -49,12 +56,12 @@ namespace ConsoleTest
             //根据id获取一个Blog
             //BlogInfo blog = bied.GetBlogById(2);
             //测试添加一个索引
-          
+
             //测试添加一个评论文档
             int ao = cied.AddCommentInfo(3, "张刚77", "这是我的一条留言");
 
             //测试添加一个博客文档
-           
+
             int a1 = bied.AddBlogInfo("我的第4个ES博客", "博客内容4");
 
 
@@ -158,5 +165,12 @@ namespace ConsoleTest
                 Console.WriteLine(sb.ToString());
             }
         }
+    }
+
+    public class Person
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+
     }
 }
