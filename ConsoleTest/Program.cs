@@ -14,6 +14,23 @@ namespace ConsoleTest
         static void Main(string[] args)
         {
 
+            //理解Async与Await
+            Console.WriteLine("主线程测试开始..");
+            AsyncMethod();
+            Thread.Sleep(1000);
+            Console.WriteLine("主线程测试结束..");
+
+            Console.ReadLine();
+            Console.ReadKey();
+            //----旧方法
+            Console.WriteLine("主线程测试开始..");
+            Thread th = new Thread(ThMethod);
+            th.Start();
+            Thread.Sleep(1000);
+            Console.WriteLine("主线程执行结束..");
+            Console.ReadLine();
+            Console.ReadKey();
+
             //Utility.ESHelper.CreateIndex("test");
             //var info = ESHelper.client.Index("");
             Person p1 = new Person();
@@ -110,6 +127,38 @@ namespace ConsoleTest
             //td21.Start();
 
             Console.ReadKey();
+        }
+
+
+        static void ThMethod()
+        {
+            Console.WriteLine("异步执行开始");
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine("异步执行" + i.ToString() + "..");
+                Thread.Sleep(1000);
+            }
+            Console.WriteLine("异步执行完成");
+        }
+
+        //使用Async和Await进步异步编程
+
+        static async void AsyncMethod()
+        {
+            Console.WriteLine("开始异步代码");
+            var result = await MyMethod();
+            Console.WriteLine("异步代码执行完毕");
+        }
+        static async Task<int> MyMethod()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine("异步执行" + i.ToString() + "..");
+                await Task.Delay(1000);//模拟耗时操作
+            }
+            int j = 0;
+           
+            return j;
         }
     }
 
