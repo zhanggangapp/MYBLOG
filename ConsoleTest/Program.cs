@@ -13,6 +13,8 @@ namespace ConsoleTest
     {
         static void Main(string[] args)
         {
+            MyClass my = new MyClass();
+            Console.ReadLine();
 
             //理解Async与Await
             Console.WriteLine("主线程测试开始..");
@@ -221,5 +223,33 @@ namespace ConsoleTest
         public string Name { get; set; }
         public int Age { get; set; }
 
+    }
+
+    //async 和 await方法使用示例
+    public class MyClass
+    {
+        public MyClass()
+        {
+            Console.WriteLine("MyClass() Begin.");
+            DisplayValue(); //这里不会阻塞  
+            Console.WriteLine("MyClass() End.");
+        }
+        public Task<double> GetValueAsync(double num1, double num2)
+        {
+            return Task.Run(() =>
+            {
+                for (int i = 0; i < 1000000; i++)
+                {
+                    num1 = num1 / num2;
+                }
+                return num1;
+            });
+        }
+        public async void DisplayValue()
+        {
+            double result = await GetValueAsync(1234.5, 1.01);//此处会开新线程处理GetValueAsync任务，然后方法马上返回  
+                                                              //这之后的所有代码都会被封装成委托，在GetValueAsync任务完成时调用  
+            Console.WriteLine("Value is : " + result);
+        }
     }
 }
