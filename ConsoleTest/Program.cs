@@ -7,12 +7,77 @@ using System.Threading;
 using Utility;
 using DAL;
 using Model;
+using System.Diagnostics;
+using System.Net;
+
 namespace ConsoleTest
 {
+    public static class Calculator
+    {
+        private static int Add(int n,int m) { return n + m; }
+        public static async Task<int> AddAsync(int n,int m)
+        {
+            int val = await Task.Run(() => Add(n,m));
+            return val;
+        }
+    }
+
     public class Program
     {
+        private static readonly Stopwatch Watch = new Stopwatch();
         static void Main(string[] args)
         {
+            var t5 = DoExceptionAsync();
+            t5.Wait();
+            Console.WriteLine($"{nameof(t5.Status)} :{t5.Status}");
+            Console.WriteLine($"{nameof(t5.IsCompleted)}:{t5.IsCompleted}");
+            Console.WriteLine($"{nameof(t5.IsCanceled)}:{t5.IsCanceled}");
+
+            Console.ReadKey();
+
+            Task<int> ttt = Calculator.AddAsync(1,2);
+            Console.WriteLine($"结果：{ttt.Result}");
+            Console.ReadLine();
+            //不用异步的程序 
+            Watch.Start();
+            const string url1 = "http://www.cnblogs.com/";
+            const string url2 = "http://www.cnblogs.com/liqingwen/";
+
+            ////两次调用 CountCharacters 方法（下载某网站内容，并统计字符的个数）
+            //var result1 = CountCharacters(1, url1);
+            //var result2 = CountCharacters(2, url2);
+
+            //异步的程序
+            Task<int> t11 = CountCharactersAsync(1, url1);
+            Task<int> t21 = CountCharactersAsync(2, url2);
+
+            //三次调用 ExtraOperation 方法（主要是通过拼接字符串达到耗时操作）
+            for (int i = 0; i < 3; i++)
+            {
+                ExtraOperation(i + 1);
+            }
+
+            //Console.WriteLine($"{url1} 的字符个数为：{result1}");
+            //Console.WriteLine($"{url2} 的字符个数为：{result2}");
+
+            Console.WriteLine($"{url1} 的字符个数为：{t11.Result}");
+            Console.WriteLine($"{url2} 的字符个数为：{t21.Result}");
+
+     //async / await 结构
+
+     //先解析一下专业名词：
+     //同步方法：一个程序调用某个方法，等到其执行完成之后才进行下一步操作。这也是默认的形式。
+     //异步方法：一个程序调用某个方法，在处理完成之前就返回该方法。通过 async/ await 我们就可以实现这种类型的方法。
+
+     //async / await 结构可分成三部分：
+     //（1）调用方法：该方法调用异步方法，然后在异步方法执行其任务的时候继续执行；
+     //（2）异步方法：该方法异步执行工作，然后立刻返回到调用方法；
+     //（3）await 表达式：用于异步方法内部，指出需要异步执行的任务。一个异步方法可以包含多个 await 表达式（不存在 await 表达式的话 IDE 会发出警告）。
+
+            Console.ReadKey();
+
+            #region 1
+
             MyClass my = new MyClass();
             Console.ReadLine();
 
@@ -129,9 +194,48 @@ namespace ConsoleTest
             //td21.Start();
 
             Console.ReadKey();
+#endregion
         }
 
+        private static async Task DoExceptionAsync()
+        {
+            try
+            {
+                await Task.Run(() => { throw new Exception(); });
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"{nameof(DoExceptionAsync)}出现异常");
+            }
+        }
 
+        //额外操作
+        private static void ExtraOperation(int id)
+        {
+            //字符串拼接来表达相对耗时的操作
+            var s = "";
+            for (var i = 0; i < 600; i++)
+            {
+                s += i;
+            }
+            Console.WriteLine($"id={id}的Extraoperations方法完成:{Watch.ElapsedMilliseconds} ms");
+        }
+        private static int CountCharacters(int id,string addrsss)
+        {
+            var wc = new WebClient();
+            Console.WriteLine($"开始调用 id={id}:{Watch.ElapsedMilliseconds} ms");
+            var result = wc.DownloadString(addrsss);
+            Console.WriteLine($"调用完成 id={id}:{Watch.ElapsedMilliseconds} ms");
+            return result.Length;
+        }
+        private static async Task<int> CountCharactersAsync(int id,string address)
+        {
+            var wc = new WebClient();
+            Console.WriteLine($"开始调用 id={id}:{Watch.ElapsedMilliseconds} ms");
+            var result = await wc.DownloadStringTaskAsync(address);
+            Console.WriteLine($"调用完成 id={id}:{Watch.ElapsedMilliseconds} ms");
+            return result.Length;
+        }
         static void ThMethod()
         {
             Console.WriteLine("异步执行开始");
