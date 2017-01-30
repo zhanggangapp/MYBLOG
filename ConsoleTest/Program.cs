@@ -9,6 +9,8 @@ using DAL;
 using Model;
 using System.Diagnostics;
 using System.Net;
+using System.Collections;
+using System.IO;
 
 namespace ConsoleTest
 {
@@ -197,6 +199,254 @@ namespace ConsoleTest
 #endregion
         }
 
+        void TestHashtable()
+        {
+            Hashtable hash = new Hashtable();
+            hash.Add("hl", "黄林");
+            hash.Add("zzz", new object());
+
+            hash.Add("hl", "huanlei");//报错 键值对集合的”键“一定不能重复。
+            //判断一个集合中是否存在某个键
+            if (!hash.ContainsKey("hl"))
+            {
+
+            }
+
+            //通过键获取值 
+            Console.WriteLine(hash["hl"].ToString());
+
+            //遍历Hashtable
+            //1。遍历键
+            foreach (object item in hash.Keys)
+            {
+                Console.WriteLine($"键：{item}---值 ：{hash[item]}");
+            }
+            //2.遍历值 
+            foreach (object item in hash.Values)
+            {
+                Console.WriteLine($"值 ：{item}");
+            }
+            //3.遍历键值 对
+            foreach (DictionaryEntry kv in hash)
+            {
+                Console.WriteLine($"键：{kv.Key}---值：{kv.Value}");
+            }
+
+            
+        }
+        ////List<T>\Dictionary<K,V>  （arraylistt 和 hashtable以后就不要用了）
+
+        void TestListDictionary()
+        {
+            List<string> list = new List<string>();
+            Console.WriteLine(list.ToString());
+
+            //Hashtable的泛型版本 Generic
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+            dict.Add("hl", 35);
+            Console.WriteLine($"{dict["hl"]}");
+            foreach (string item in dict.Keys)
+            {
+                Console.WriteLine(item);
+            }
+            foreach (int item in dict.Values)
+            {
+                Console.WriteLine(item);
+            }
+            foreach (KeyValuePair<string,int> item in dict)
+            {
+                Console.WriteLine($"key:{item.Key}----value:{item.Value}");
+
+            }
+        }
+
+        //var
+        void TestVr()
+        {
+            //var 【类型推断】
+            //1.使用var声明变量与直接使用对应的类型声明是完全是一样的。编译器在编译时，var被替换为对应的数据类型。
+            //2.c#中的var与js中的var完全不一样。c#中var仍是强类型，js中var是弱类型。
+            //3.var只能用作局部变量（方法中声明的变量）。不能用作类的成员变量，不用用途方法的返回值 ，也不能用作方法的参数。
+            //var s;
+            var s = 123;
+            int s1 = 123;
+            //s = "123";
+        }
+
+        //装箱与拆箱
+        void TestBox()
+        {
+            int n = 100;
+            //这个不是装箱和折箱，是类型转称。（创建了新的变量）
+            string s = Convert.ToString(n);
+            int m = int.Parse(s);
+
+            int n2 = 100;
+            object o = n2;//发生了一次装箱
+            int m2 = (int)o;//发生了一次折箱。
+
+            double d = 100.9;
+            object o2 = d;
+            //int n3 = (int)o2;//报错：指定的转换无效。拆箱时必须用装箱的类型。
+            double d2 = (double)o2;
+            Console.WriteLine(n2);
+
+        }
+
+        //TestGeneric
+        void TestGeneric()
+        {
+            MyClass<int> mint = new MyClass<int>();
+            mint[0] = 5;
+            MyClass<string> mstring = new MyClass<string>();
+            mstring[0] = "5";
+            
+        }
+        public class MyClass<T>
+        {
+            private T[] _data = new T[5];
+            public T this[int index]
+            {
+                get { return _data[index]; }
+                set { _data[index] = value; }
+            }
+        }
+        //约束，T2必须是值类型 K为引用类型 V：实现某接口的类型  W：是K的子类。 x：引用类型，且带有无参构造函数
+        public class MyClass2<T2,K,V,W,X> where T2:struct where K:class where V:IComparable  where W:K where X:class,new()
+        {
+            private T2[] _data = new T2[5];
+            public T2 this[int index]
+            {
+                get { return _data[index]; }
+                set { _data[index] = value; }
+            }
+        }
+
+        //foreach(*) 
+        void TestForeach()
+        {
+            int[] arr = { 1, 2, 45 };
+            foreach (var item in arr)
+            {
+                Console.WriteLine(item);
+            }
+            //凡是具有GetEnumerator()方法的类型可以使用foreach来遍历。foreach遍历是调用了一个”枚举器“来遍历数据，和foreach关没系，foreach只是一个语法上的简化而已。
+
+            Person p = new Person();
+            IEnumerator etor = p.GetEnumerator();
+            while (etor.MoveNext())
+            {
+                Console.WriteLine(etor.Current.ToString());
+            }
+            etor.Reset();
+            while (etor.MoveNext())
+            {
+                Console.WriteLine(etor.Current.ToString());
+            }
+            //foreach是上面的简写形式.il代码中,没有foreach这个函数.
+            foreach (string item in p)
+            {
+                Console.WriteLine(item);
+            }
+        }
+        //1.实现IEnumeralbe的接口，通过这个接口，实现GetEnumerator方法
+        public class Person:IEnumerable
+        {
+            private string[] Friends = new string[] { "a","b","c","d"};
+
+
+            public string Name { get; set; }
+            public int Age { get; set; }
+
+            public IEnumerator GetEnumerator()
+            {
+                //2.这个方法要返回一个枚举器
+                return new PersonEnumerator(this.Friends);
+            }
+        }
+        //这个类型就是一个“枚举器”。希望一个类被“枚举”、“遍历”，要给这个类person实现一个枚举器类：PersonEnumerator。
+        public class PersonEnumerator : IEnumerator
+        {
+            private string[] _friends;
+            //下标一般是指向了第一条的前一条.所以是-1
+            private int index = -1;
+            public PersonEnumerator(string[] fs)
+            {
+                _friends = fs;
+            }
+            public object Current
+            {
+                get
+                {
+                    if (index>=0 && index<_friends.Length)
+                    {
+                        return _friends[index];
+                    }
+                    else
+                    {
+                        throw new IndexOutOfRangeException();
+                    }
+                }
+            }
+            public bool MoveNext()
+            {
+                if (index+1<_friends.Length)
+                {
+                    index++;
+                    return true;
+                }
+                return false;
+            }
+
+            public void Reset()
+            {
+                index = -1;
+            }
+        }
+        void TestForeach2()
+        {
+            string[] ss = { "a", "b", "c" };
+            IEnumerable ie = ss;
+            foreach (var item in ie)
+            {
+                Console.WriteLine(item);
+            }
+        }
+        void TestFile()
+        {
+            string path = @"D:\zg\SOS.dll";
+            //1.获取文件名
+            Console.WriteLine(Path.GetFileName(path));
+            //2.获取文件的后缀
+            Console.WriteLine(Path.GetExtension(path));
+            //3.获取不带后缀的文件名
+            Console.WriteLine(Path.GetFileNameWithoutExtension(path));
+            //4.获取路径的目录部分
+            Console.WriteLine(Path.GetDirectoryName(path));
+            //5.将路径中的文件名的后续缀改为.exe
+            Console.WriteLine(Path.ChangeExtension(path, ".exe"));
+
+            string s1 = @"c:\zg\zg";
+            string s2 = "zt.txt";
+            Console.WriteLine(Path.Combine(s1, s2));
+        }
+        //delegate：委托是一种数据类型，像类一样。（可以声明委托类型变量），方法参数可以是int,string、类类型。
+        void TestDelegate()
+        {
+            //2.声明委托变量md，并且new了一个委托对象并且把方法m1传递进去。那md委托保存了M1方法。
+            MyDelete md = new MyDelete(M1);
+
+            //3。调用md委托的时候，相当于调用了m1方法。
+            md();
+            Console.WriteLine("OK");
+
+        }
+        static void M1()
+        {
+            Console.WriteLine("我是一个无返回值，无参数的方法");
+        }
+        //1.定义一个委托，用来保存无参数无返回值 的方法。
+        public delegate void MyDelete();
         private static async Task DoExceptionAsync()
         {
             try
