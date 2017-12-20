@@ -55,8 +55,9 @@ namespace BLOG.Controllers
                         Session["user"] = "zhanggang@outlook.com";
                         return RedirectToAction("Index", "Home");
                     }
+                    return View();
                 }
-                return View();
+                
 
 
 

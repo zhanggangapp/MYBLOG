@@ -155,7 +155,7 @@ namespace DAL
 
         public void LoadEntity(DataRow row, BlogInfo blogInfo)
         {
-            blogInfo.BlogId = Convert.ToInt64(row["Id"]);
+            blogInfo.BlogId = Convert.ToInt64(row["BlogId"]);
             blogInfo.Title = row["Title"] != DBNull.Value ? row["Title"].ToString() : string.Empty;
             //首页只显示第一个<p></p>内容即可. 匹配经常失败,由于<p class="..不能匹配.
             //Regex re = new Regex("<p>(?<content>[\\w\\W]*?)</p>");
@@ -171,7 +171,7 @@ namespace DAL
         }
         public void LoadTitleEntity(DataRow row, BlogInfo blogInfo)
         {
-            blogInfo.BlogId = Convert.ToInt64(row["Id"]);
+            blogInfo.BlogId = Convert.ToInt64(row["BlogId"]);
             blogInfo.Title = row["Title"] != DBNull.Value ? row["Title"].ToString() : string.Empty;
             blogInfo.CreatedTime = Convert.ToDateTime(row["CreatedTime"]);
         }

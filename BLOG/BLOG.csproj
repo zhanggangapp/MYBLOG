@@ -335,6 +335,7 @@
     <Content Include="asp.net\file_manager_json.ashx" />
     <Content Include="asp.net\upload_json.ashx" />
     <None Include="Properties\PublishProfiles\22.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\ZBHBlog.pubxml" />
     <None Include="Properties\PublishProfiles\ZBHBlogWork.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -350,8 +351,10 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <None Include="Scripts\_references.js" />
-    <Content Include="sql.txt" />
-    <Content Include="Web.config" />
+    <Content Include="sql.sql" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Blog\Index.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
