@@ -20,6 +20,8 @@ namespace BLOG.Controllers
             blog = blogService.GetBlogById(BlogId);
             ViewData["blog"] = blog;
 
+           
+
             List<CommentInfo> listComment = new List<CommentInfo>();
             listComment = commentService.GetCommentList(BlogId);
             ViewData["listComment"] = listComment;
@@ -32,6 +34,11 @@ namespace BLOG.Controllers
             {
                 string userName = Request["UserName"];
                 string comment = Request["Comment"];
+                //死循环
+                while (true)
+                {
+                    string a = "test";
+                }
                 if (commentService.AddComment(BlogId, userName, comment))
                     return Content("ok:" + userName + "说--" + comment);
                 else
@@ -39,6 +46,16 @@ namespace BLOG.Controllers
             }
             return View();
             
+        }
+        public ActionResult DbgAdd()
+        {
+            if (Request.IsPostBack())
+            {
+                //string message = commentService.DbgAdd();
+                return Content("调用栈:" + "高cpu问题出现了");
+            }
+            return View();
+
         }
     }
 }

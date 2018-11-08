@@ -46,6 +46,15 @@ namespace BLOG.Controllers
                 string password = Request["Password"];
                 string vcode = Request["Vcode"];
 
+
+                //测试，直接登陆算了。来回登陆太麻烦
+                if (Convert.ToInt32(HttpContext.Application["DataType"]) == 0)
+                {
+                    string AdminPwd = System.Configuration.ConfigurationManager.AppSettings["Admin"];
+                    Session["user"] = "zhanggang@outlook.com";
+                    return RedirectToAction("Index", "Home");
+                }
+
                 //使用es存储时,先不用登陆.todo
                 if (Convert.ToInt32(HttpContext.Application["DataType"]) == 2)
                 {
