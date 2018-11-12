@@ -25,6 +25,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -404,6 +405,10 @@
     <Folder Include="Views\RSS\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\dbgProgram\MDbg Sample\src\debugger\mdbgeng\mdbgeng.csproj">
+      <Project>{634b90a2-0344-44c5-83f0-06180b2fda05}</Project>
+      <Name>mdbgeng</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BLL\BLL.csproj">
       <Project>{f5f4b811-c3b6-415d-9487-6e8a2272e6de}</Project>
       <Name>BLL</Name>
@@ -420,6 +425,9 @@
       <Project>{e79c0d33-eb96-49bf-863b-9834ea7bce8a}</Project>
       <Name>Utility</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

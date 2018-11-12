@@ -7,6 +7,8 @@ using Model;
 using BLL;
 using System.Threading.Tasks;
 using System.Threading;
+using Microsoft.Samples.Debugging.MdbgEngine;
+using System.Diagnostics;
 
 namespace BLOG.Controllers
 {
@@ -64,6 +66,8 @@ namespace BLOG.Controllers
 
         public ActionResult MDbgAdd()
         {
+            string deeVersion = MdbgVersionPolicy.GetDefaultAttachVersion(Process.GetCurrentProcess().Id);
+
             if (Request.IsPostBack())
             {
                 string message = commentService.MDbgAdd();

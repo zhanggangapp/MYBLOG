@@ -65,8 +65,12 @@ namespace BLL
 
         public string MDbgAdd()
         {
+            
             Thread t = new Thread(ExectueCmdForMdbgConsole);
             t.Start(Process.GetCurrentProcess().Id);
+
+            
+
             t.Join();
             //string result = ExectueCmdForCDB();
             return result;
@@ -205,7 +209,11 @@ namespace BLL
         {
             System.Diagnostics.Process p = new System.Diagnostics.Process();
 
-            p.StartInfo.FileName = @"D:\View\MYBLOG\CpuAnalyzer\bin\Debug\NETCpuAnalyzer.exe";
+            //p.StartInfo.FileName = @"D:\View\MYBLOG\CpuAnalyzer\bin\Debug\NETCpuAnalyzer.exe";
+            p.StartInfo.FileName = @"D:\View\MYBLOG\cpuanalyzermaster\bin\Debug\cpuanalyzer.exe";
+
+        
+
             p.StartInfo.Arguments = spid.ToString();
             p.StartInfo.UseShellExecute = false;    //是否使用操作系统shell启动
             p.StartInfo.RedirectStandardInput = true;//接受来自调用程序的输入信息
@@ -223,18 +231,12 @@ namespace BLL
             p.WaitForExit();//等待程序执行完退出进程
             p.Close();
             result = output.Replace(">", "::");
-            //using (var sr = new StreamWriter(@"D:\View\MYBLOG\CpuAnalyzer\bin\Debug\" + process.ProcessName + ".htm", false,
-            //                                    Encoding.Default))
-            //{
-            //    sw.Write(sb.ToString());
-            //}
             using (var sr = new StreamReader(@"D:\View\MYBLOG\CpuAnalyzer\bin\Debug\w3wp.htm", Encoding.Default))
             {
                 result += "<br />" + sr.ReadToEnd();
             }
             //Utility.Logger.Log(message);
         }
-        //D:\View\MYBLOG\CpuAnalyzer\bin\Debug\NETCpuAnalyzer.exe
 
         private void ExectueCmdForMdbg()
         {
