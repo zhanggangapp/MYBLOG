@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLOG", "BLOG\BLOG.csproj", "{A52260C0-1637-49EF-A605-0F67F19AC246}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "ConsoleTest\ConsoleTest.csproj", "{D00A3493-0702-4BA1-A204-29CA493E3BAB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormTest", "FormTest\FormTest.csproj", "{3F1C07F9-BFF3-459B-BC3F-BB9B12E43531}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETCpuAnalyzer", "CpuAnalyzer\NETCpuAnalyzer.csproj", "{97C92C09-BE84-4A84-88F4-C17F2137B4EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,8 +59,15 @@ Global
 		{3F1C07F9-BFF3-459B-BC3F-BB9B12E43531}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F1C07F9-BFF3-459B-BC3F-BB9B12E43531}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F1C07F9-BFF3-459B-BC3F-BB9B12E43531}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97C92C09-BE84-4A84-88F4-C17F2137B4EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97C92C09-BE84-4A84-88F4-C17F2137B4EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97C92C09-BE84-4A84-88F4-C17F2137B4EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97C92C09-BE84-4A84-88F4-C17F2137B4EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {120C6C9B-66CD-4F80-847B-C7A000A01B0D}
 	EndGlobalSection
 EndGlobal

@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using Model;
 using BLL;
+using System.Threading.Tasks;
+using System.Threading;
+
 namespace BLOG.Controllers
 {
     public class BlogController : Controller
@@ -47,15 +50,26 @@ namespace BLOG.Controllers
             return View();
             
         }
-        public ActionResult DbgAdd()
+
+        //static AutoResetEvent myResetEvent = new AutoResetEvent(false);
+        public  ActionResult DbgAdd()
         {
             if (Request.IsPostBack())
             {
-                //string message = commentService.DbgAdd();
-                return Content("调用栈:" + "高cpu问题出现了");
+                string message = commentService.DbgAdd();
+                return Content("调用栈------：dbg:" + message);
             }
             return View();
+        }
 
+        public ActionResult MDbgAdd()
+        {
+            if (Request.IsPostBack())
+            {
+                string message = commentService.MDbgAdd();
+                return Content("调用栈------：mdbg:" + message);
+            }
+            return View();
         }
     }
 }

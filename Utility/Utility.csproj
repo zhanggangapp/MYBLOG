@@ -30,9 +30,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CorApi, Version=0.0.0.0, Culture=neutral, PublicKeyToken=450f4c3039fb2f70, processorArchitecture=MSIL">
+      <HintPath>..\packages\MDbg.0.1.0\lib\net40\CorApi.dll</HintPath>
+    </Reference>
+    <Reference Include="CorApiRaw, Version=0.0.0.0, Culture=neutral, PublicKeyToken=450f4c3039fb2f70, processorArchitecture=MSIL">
+      <HintPath>..\packages\MDbg.0.1.0\lib\net40\CorApiRaw.dll</HintPath>
+    </Reference>
     <Reference Include="Elasticsearch.Net, Version=5.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
       <HintPath>..\packages\Elasticsearch.Net.5.0.0\lib\net46\Elasticsearch.Net.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="MDbgEng, Version=0.0.0.0, Culture=neutral, PublicKeyToken=450f4c3039fb2f70, processorArchitecture=MSIL">
+      <HintPath>..\packages\MDbg.0.1.0\lib\net40\MDbgEng.dll</HintPath>
+    </Reference>
+    <Reference Include="MDbgExt, Version=0.0.0.0, Culture=neutral, PublicKeyToken=450f4c3039fb2f70, processorArchitecture=MSIL">
+      <HintPath>..\packages\MDbg.0.1.0\lib\net40\MDbgExt.dll</HintPath>
+    </Reference>
+    <Reference Include="MdbgUtility, Version=0.0.0.0, Culture=neutral, PublicKeyToken=450f4c3039fb2f70, processorArchitecture=MSIL">
+      <HintPath>..\packages\MDbg.0.1.0\lib\net40\MdbgUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="NativeDebugWrappers, Version=0.0.0.0, Culture=neutral, PublicKeyToken=450f4c3039fb2f70, processorArchitecture=MSIL">
+      <HintPath>..\packages\MDbg.0.1.0\lib\net40\NativeDebugWrappers.dll</HintPath>
     </Reference>
     <Reference Include="Nest, Version=5.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
       <HintPath>..\packages\NEST.5.0.0\lib\net46\Nest.dll</HintPath>

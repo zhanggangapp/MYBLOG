@@ -16,19 +16,81 @@ namespace ConsoleTest
 {
     public static class Calculator
     {
-        private static int Add(int n,int m) { return n + m; }
-        public static async Task<int> AddAsync(int n,int m)
+        private static int Add(int n, int m) { return n + m; }
+        public static async Task<int> AddAsync(int n, int m)
         {
-            int val = await Task.Run(() => Add(n,m));
+            int val = await Task.Run(() => Add(n, m));
             return val;
         }
     }
+
+    //async 和 await方法使用示例
+    public class MyClass
+    {
+        public MyClass()
+        {
+            Console.WriteLine("MyClass() Begin.");
+
+            Task<string> msg = DisplayValue(); //这里不会阻塞  
+            string ss = msg.Result;
+            Console.WriteLine("msg:" + ss);
+            Console.WriteLine("MyClass() End."+ss);
+        }
+        public Task<double> GetValueAsync(double num1, double num2)
+        {
+            return Task.Run(() =>
+            {
+                for (int i = 0; i < 1000000; i++)
+                {
+                    num1 = num1 / num2;
+                }
+                return num1;
+            });
+        }
+        public Task<string> GetStringAsync()
+        {
+            return Task.Run(() =>
+            {
+                for (Int32 iii = 0; iii < 100009; iii++)
+                {
+
+                }
+                return "zhanggnagb";
+            });
+        }
+
+        //public async void DisplayValue()
+        //{
+        //    double result = await GetValueAsync(1234.5, 1.01);//此处会开新线程处理GetValueAsync任务，然后方法马上返回  
+        //                                                      //这之后的所有代码都会被封装成委托，在GetValueAsync任务完成时调用  
+        //    Console.WriteLine("Value is : " + result);
+        //}
+        public async Task<string> DisplayValue()
+        {
+            string result = await GetStringAsync();//此处会开新线程处理GetValueAsync任务，然后方法马上返回  
+                                                  //这之后的所有代码都会被封装成委托，在GetValueAsync任务完成时调用  
+            Console.WriteLine("Value is : " + result);
+            return result;
+        }
+    }
+
+
+
+
 
     public class Program
     {
         private static readonly Stopwatch Watch = new Stopwatch();
         static void Main(string[] args)
         {
+            MyClass my = new MyClass();
+
+            Console.ReadLine();
+
+
+            return;
+
+
             var t5 = DoExceptionAsync();
             t5.Wait();
             Console.WriteLine($"{nameof(t5.Status)} :{t5.Status}");
@@ -37,7 +99,7 @@ namespace ConsoleTest
 
             Console.ReadKey();
 
-            Task<int> ttt = Calculator.AddAsync(1,2);
+            Task<int> ttt = Calculator.AddAsync(1, 2);
             Console.WriteLine($"结果：{ttt.Result}");
             Console.ReadLine();
             //不用异步的程序 
@@ -65,22 +127,22 @@ namespace ConsoleTest
             Console.WriteLine($"{url1} 的字符个数为：{t11.Result}");
             Console.WriteLine($"{url2} 的字符个数为：{t21.Result}");
 
-     //async / await 结构
+            //async / await 结构
 
-     //先解析一下专业名词：
-     //同步方法：一个程序调用某个方法，等到其执行完成之后才进行下一步操作。这也是默认的形式。
-     //异步方法：一个程序调用某个方法，在处理完成之前就返回该方法。通过 async/ await 我们就可以实现这种类型的方法。
+            //先解析一下专业名词：
+            //同步方法：一个程序调用某个方法，等到其执行完成之后才进行下一步操作。这也是默认的形式。
+            //异步方法：一个程序调用某个方法，在处理完成之前就返回该方法。通过 async/ await 我们就可以实现这种类型的方法。
 
-     //async / await 结构可分成三部分：
-     //（1）调用方法：该方法调用异步方法，然后在异步方法执行其任务的时候继续执行；
-     //（2）异步方法：该方法异步执行工作，然后立刻返回到调用方法；
-     //（3）await 表达式：用于异步方法内部，指出需要异步执行的任务。一个异步方法可以包含多个 await 表达式（不存在 await 表达式的话 IDE 会发出警告）。
+            //async / await 结构可分成三部分：
+            //（1）调用方法：该方法调用异步方法，然后在异步方法执行其任务的时候继续执行；
+            //（2）异步方法：该方法异步执行工作，然后立刻返回到调用方法；
+            //（3）await 表达式：用于异步方法内部，指出需要异步执行的任务。一个异步方法可以包含多个 await 表达式（不存在 await 表达式的话 IDE 会发出警告）。
 
             Console.ReadKey();
 
             #region 1
 
-            MyClass my = new MyClass();
+            MyClass my2 = new MyClass();
             Console.ReadLine();
 
             //理解Async与Await
@@ -196,7 +258,7 @@ namespace ConsoleTest
             //td21.Start();
 
             Console.ReadKey();
-#endregion
+            #endregion
         }
 
         void TestHashtable()
@@ -232,7 +294,7 @@ namespace ConsoleTest
                 Console.WriteLine($"键：{kv.Key}---值：{kv.Value}");
             }
 
-            
+
         }
         ////List<T>\Dictionary<K,V>  （arraylistt 和 hashtable以后就不要用了）
 
@@ -253,7 +315,7 @@ namespace ConsoleTest
             {
                 Console.WriteLine(item);
             }
-            foreach (KeyValuePair<string,int> item in dict)
+            foreach (KeyValuePair<string, int> item in dict)
             {
                 Console.WriteLine($"key:{item.Key}----value:{item.Value}");
 
@@ -300,7 +362,7 @@ namespace ConsoleTest
             mint[0] = 5;
             MyClass<string> mstring = new MyClass<string>();
             mstring[0] = "5";
-            
+
         }
         public class MyClass<T>
         {
@@ -312,7 +374,7 @@ namespace ConsoleTest
             }
         }
         //约束，T2必须是值类型 K为引用类型 V：实现某接口的类型  W：是K的子类。 x：引用类型，且带有无参构造函数
-        public class MyClass2<T2,K,V,W,X> where T2:struct where K:class where V:IComparable  where W:K where X:class,new()
+        public class MyClass2<T2, K, V, W, X> where T2 : struct where K : class where V : IComparable where W : K where X : class, new()
         {
             private T2[] _data = new T2[5];
             public T2 this[int index]
@@ -350,9 +412,9 @@ namespace ConsoleTest
             }
         }
         //1.实现IEnumeralbe的接口，通过这个接口，实现GetEnumerator方法
-        public class Person:IEnumerable
+        public class Person : IEnumerable
         {
-            private string[] Friends = new string[] { "a","b","c","d"};
+            private string[] Friends = new string[] { "a", "b", "c", "d" };
 
 
             public string Name { get; set; }
@@ -378,7 +440,7 @@ namespace ConsoleTest
             {
                 get
                 {
-                    if (index>=0 && index<_friends.Length)
+                    if (index >= 0 && index < _friends.Length)
                     {
                         return _friends[index];
                     }
@@ -390,7 +452,7 @@ namespace ConsoleTest
             }
             public bool MoveNext()
             {
-                if (index+1<_friends.Length)
+                if (index + 1 < _friends.Length)
                 {
                     index++;
                     return true;
@@ -470,7 +532,7 @@ namespace ConsoleTest
             }
             Console.WriteLine($"id={id}的Extraoperations方法完成:{Watch.ElapsedMilliseconds} ms");
         }
-        private static int CountCharacters(int id,string addrsss)
+        private static int CountCharacters(int id, string addrsss)
         {
             var wc = new WebClient();
             Console.WriteLine($"开始调用 id={id}:{Watch.ElapsedMilliseconds} ms");
@@ -478,7 +540,7 @@ namespace ConsoleTest
             Console.WriteLine($"调用完成 id={id}:{Watch.ElapsedMilliseconds} ms");
             return result.Length;
         }
-        private static async Task<int> CountCharactersAsync(int id,string address)
+        private static async Task<int> CountCharactersAsync(int id, string address)
         {
             var wc = new WebClient();
             Console.WriteLine($"开始调用 id={id}:{Watch.ElapsedMilliseconds} ms");
@@ -513,7 +575,7 @@ namespace ConsoleTest
                 await Task.Delay(1000);//模拟耗时操作
             }
             int j = 0;
-           
+
             return j;
         }
     }
@@ -579,31 +641,5 @@ namespace ConsoleTest
 
     }
 
-    //async 和 await方法使用示例
-    public class MyClass
-    {
-        public MyClass()
-        {
-            Console.WriteLine("MyClass() Begin.");
-            DisplayValue(); //这里不会阻塞  
-            Console.WriteLine("MyClass() End.");
-        }
-        public Task<double> GetValueAsync(double num1, double num2)
-        {
-            return Task.Run(() =>
-            {
-                for (int i = 0; i < 1000000; i++)
-                {
-                    num1 = num1 / num2;
-                }
-                return num1;
-            });
-        }
-        public async void DisplayValue()
-        {
-            double result = await GetValueAsync(1234.5, 1.01);//此处会开新线程处理GetValueAsync任务，然后方法马上返回  
-                                                              //这之后的所有代码都会被封装成委托，在GetValueAsync任务完成时调用  
-            Console.WriteLine("Value is : " + result);
-        }
-    }
+
 }

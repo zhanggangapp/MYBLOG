@@ -43,12 +43,36 @@
                 type: "post",
                 url: "/Blog/DbgAdd",
                 success: function (data) {
-                    var serverData = data.split(':');
+                    var serverData = data.split('------');
+
                     if (serverData[0] == "调用栈") {
                         $("#DbgLable").append(serverData[1] + "<br/>");
                         $("#dbgresult").css("display", "block");
                     } else {
                         alert('获取调用栈出错。');
+                    }
+                },
+                error: function (data) {
+                    alert(data);
+                }
+            });//jquery.form.js -->myajaxform.js
+        });
+    }
+
+    function DbgAddbtn() {
+        $("#commentMDbgAddbtn").click(function () {
+
+            $("#form3").ajaxSubmit({
+                type: "post",
+                url: "/Blog/MDbgAdd",
+                success: function (data) {
+                    var serverData = data.split('------');
+
+                    if (serverData[0] == "调用栈") {
+                        $("#MDbgLable").append(serverData[1] + "<br/>");
+                        $("#Mdbgresult").css("display", "block");
+                    } else {
+                        alert('内部获取调用栈出错。');
                     }
                 },
                 error: function (data) {
@@ -151,7 +175,21 @@
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <i class="glyphicon glyphicon-warning-sign">获取调用栈成功</i>
         </div>
-        <p id="DbgLable"></p>
+        <p id="DbgLable">
+        </p>
+
+    }
+
+    using (Ajax.BeginForm("MDbgAdd", "Blog", null, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterAdd" }, new { id = "form3" }))
+    {
+
+        <button type="button" name="commentMDbgAdd" id="commentMDbgAddbtn" class="btn btn-default">MDbgAdd</button>
+        <div id="Mdbgresult" class="alert alert-dismissable alert-warning" style="max-width:280px; display:none;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <i class="glyphicon glyphicon-warning-sign">内部获取调用栈成功</i>
+        </div>
+        <p id="MDbgLable">
+        </p>
 
     }
 
