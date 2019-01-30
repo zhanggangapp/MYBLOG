@@ -9,6 +9,7 @@
         commentAddClick();
         DbgAddbtn();
         commantDellClick();
+        ModuleAdd();
     })
     function commentAddClick() {
         $("#commentAddbtn").click(function () {
@@ -73,6 +74,29 @@
                         $("#Mdbgresult").css("display", "block");
                     } else {
                         alert('内部获取调用栈出错。');
+                    }
+                },
+                error: function (data) {
+                    alert(data);
+                }
+            });//jquery.form.js -->myajaxform.js
+        });
+    }
+
+    function ModuleAdd() {
+        $("#ModuleAddbtn").click(function () {
+
+            $("#form4").ajaxSubmit({
+                type: "post",
+                url: "/Blog/ModuleAdd",
+                success: function (data) {
+                    var serverData = data.split('------');
+
+                    if (serverData[0] == "dll信息") {
+                        $("#ModuleLable").append(serverData[1] + "<br/>");
+                        $("#Moduleresult").css("display", "block");
+                    } else {
+                        alert('获取DLL信息出错。');
                     }
                 },
                 error: function (data) {
@@ -192,5 +216,20 @@
         </p>
 
     }
+
+
+    using (Ajax.BeginForm("ModuleAdd", "Blog", null, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterAdd" }, new { id = "form4" }))
+    {
+
+        <button type="button" name="ModuleAdd" id="ModuleAddbtn" class="btn btn-default">ModuleAdd</button>
+        <div id="Moduleresult" class="alert alert-dismissable alert-warning" style="max-width:280px; display:none;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <i class="glyphicon glyphicon-warning-sign">Module信息获取成功。</i>
+        </div>
+        <p id="ModuleLable">
+        </p>
+
+    }
+
 
 }

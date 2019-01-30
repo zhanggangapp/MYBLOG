@@ -75,5 +75,16 @@ namespace BLOG.Controllers
             }
             return View();
         }
+
+        public ActionResult ModuleAdd()
+        {
+            if (Request.IsPostBack())
+            {
+                string message = commentService.ModuleAdd();
+                return Content("dll信息------：dll:" + message);
+            }
+            return View();
+        }
+
     }
 }

@@ -10,6 +10,7 @@ using System.Threading;
 using System.Diagnostics;
 using Microsoft.Samples.Debugging.MdbgEngine;
 using System.IO;
+using System.Reflection;
 
 namespace BLL
 {
@@ -75,8 +76,21 @@ namespace BLL
             //string result = ExectueCmdForCDB();
             return result;
         }
+        public string ModuleAdd()
+        {
+            //string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
 
+            UriBuilder uril = new UriBuilder(codeBase);
+            string dllPath = Uri.UnescapeDataString(uril.Path);
+            result = Path.GetDirectoryName(dllPath);
 
+            return codeBase;
+
+            //Thread t = new Thread(ExectueModule);
+            //t.Start(Process.GetCurrentProcess().Id);
+            //return result;
+        }
 
         private string ExectueCmdForDbg()
         {
@@ -210,7 +224,7 @@ namespace BLL
             System.Diagnostics.Process p = new System.Diagnostics.Process();
 
             //p.StartInfo.FileName = @"D:\View\MYBLOG\CpuAnalyzer\bin\Debug\NETCpuAnalyzer.exe";
-            p.StartInfo.FileName = @"D:\View\MYBLOG\cpuanalyzermaster\bin\Debug\cpuanalyzer.exe";
+            p.StartInfo.FileName = @"D:\View\MYBLOG\CpuAnalyzer\bin\Debug\NETCpuAnalyzer.exe";
 
         
 
@@ -231,11 +245,29 @@ namespace BLL
             p.WaitForExit();//等待程序执行完退出进程
             p.Close();
             result = output.Replace(">", "::");
-            using (var sr = new StreamReader(@"D:\View\MYBLOG\CpuAnalyzer\bin\Debug\w3wp.htm", Encoding.Default))
+            string w3wppath = @"D:\View\MYBLOG\CpuAnalyzer\bin\Debug\" + spid.ToString() + ".htm";
+            if (File.Exists(w3wppath))
             {
-                result += "<br />" + sr.ReadToEnd();
+                using (var sr = new StreamReader(@"D:\View\MYBLOG\CpuAnalyzer\bin\Debug\" + spid.ToString() + ".htm", Encoding.Default))
+                {
+                    result += "<br />" + sr.ReadToEnd();
+                }
             }
+            else
+            {
+                result = "<br />没有取得调用栈";
+            }
+            
             //Utility.Logger.Log(message);
+        }
+
+        private void ExectueModule(object spid)
+        {
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            UriBuilder uril = new UriBuilder(codeBase);
+            string dllPath = Uri.UnescapeDataString(uril.Path);
+            result = Path.GetDirectoryName(dllPath);
+            //    result = "<br />没有取得DLL信息";
         }
 
         private void ExectueCmdForMdbg()

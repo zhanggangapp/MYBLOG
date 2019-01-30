@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Collections;
 using System.IO;
+using System.Reflection;
 
 namespace ConsoleTest
 {
@@ -83,6 +84,22 @@ namespace ConsoleTest
         private static readonly Stopwatch Watch = new Stopwatch();
         static void Main(string[] args)
         {
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            UriBuilder uril = new UriBuilder(codeBase);
+            string dllPath = Uri.UnescapeDataString(uril.Path);
+            string result = Path.GetDirectoryName(dllPath);
+
+
+
+
+
+
+
+
+
+
+
+            return;
             MyClass my = new MyClass();
 
             Console.ReadLine();
